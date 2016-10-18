@@ -71,13 +71,13 @@ Table of Contents
            advertisements  . . . . . . . . . . . . . . . . . . . . .   3
    2.  Protocol Definition . . . . . . . . . . . . . . . . . . . . .   3
      2.1.  Protocol Example  . . . . . . . . . . . . . . . . . . . .   4
-   3.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
-   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   3.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
      5.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
-     5.2.  Informative References  . . . . . . . . . . . . . . . . .   8
-   Appendix A.  appendix . . . . . . . . . . . . . . . . . . . . . .   8
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
+     5.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   Appendix A.  appendix . . . . . . . . . . . . . . . . . . . . . .   9
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -190,10 +190,10 @@ Internet-Draft                IE for ICMPv6                 October 2016
 2.1.  Protocol Example
 
    Typically a Router Advertisement will be placed inside the Sub-Type.
-   The entire structure typically looks like:
-
-
-
+   The entire structure has an IPv6 header, followed by an ICMPv6 header
+   containing an Router Advertisement Header.  Options within the RA
+   would include the Source Link Layer Address option, and a newly
+   created Network Identity option.
 
 
 
@@ -229,47 +229,47 @@ Internet-Draft                IE for ICMPv6                 October 2016
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |Ver  6 | TC = 0        |           Flow Label = 0              |
+   |Ver  6 | TC = 0        |           Flow Label = 0              | 0
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |         Payload Length        |  NH = 58      | Hop Lmt = 1   |
+   |         Payload Length        |  NH = 58      | Hop Lmt = 1   | 4
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                                                               |
+   |                                                               | 8
    +                                                               +
-   |                                                               |
+   |                                                               | 12
    +                         Source Address                        +
-   |                           fe80::LL                            |
+   |                           fe80::LL                            | 16
    +                                                               +
-   |                                                               |
+   |                                                               | 20
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                                                               |
+   |                                                               | 24
    +                                                               +
-   |                                                               |
+   |                                                               | 28
    +                      Destination Address                      +
-   |                           fe02::1                             |
+   |                           fe02::1                             | 32
    +                                                               +
-   |                                                               |
+   |                                                               | 36
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Type = 134   |  Code = 0     |          Checksum             |
+   |  Type = 134   |  Code = 0     |          Checksum             | 40
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | HL = 0        |0|0|  Reserved |  Router lifetime = 9000       |
+   | HL = 0        |0|0|  Reserved |  Router lifetime = 9000       | 44
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                         Reachable Time   = 0  XXX             |
+   |                         Reachable Time   = 0  XXX             | 44
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                          Retrans Timer   = 0  XXX             |
+   |                          Retrans Timer   = 0  XXX             | 52
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Type = 1      | Len = 10      |    EUI-64 of router           |
+   | Type = 1 SLLA | Len = 10      |    EUI-64 of router           | 56
    +-+-+-+-+-+-+-+-+-+-+-+---------+                               +
-   |                    EUI-64 of router                           |
+   |                    EUI-64 of router                           | 60
    +                               +---------------+---------------+
-   | EUI-64 of router              | Type = TBD-YYY|  Len = 18     |
+   | EUI-64 of router              | Type = TBD-YYY|  Len = 18     | 64
    +-------------------------------+-------------------------------+
-   |                             DODAGID                           |
+   |                             DODAGID                           | 68
    +                                                               |
-   |                                                               |
+   |                                                               | 72
    +                                                               |
-   |                                                               |
+   |                                                               | 76
    +                                                               |
-   |                                                               |
+   |                                                               | 80
    +---------------------------------------------------------------+
 
    When compressed by [RFC6282], this becomes:
@@ -313,6 +313,60 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
    The total number of bytes needed is 56 bytes.
 
+   Applying [RFC7400] results in:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Richardson               Expires April 21, 2017                 [Page 6]
+
+Internet-Draft                IE for ICMPv6                 October 2016
+
+
+   +---------------------------------------------------------------+
+   | 0 | 1 | 1 |TF= 11 |NH |HLIM=01|CID|SAC|  SAM  | M |DAC|  DAM  | 0
+   +   |   |   |       | 1 |       | 0 | 0 | 0   1 + 1 + 0 + 1   1 +
+   +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+   |   dstXX = 0x01                | NHC = 0b1101 1111 (RFC7400)   | 4
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | 0b0000 0100   |  Type = 134   |  Code = 0     |          Check| 8
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | sum           |0b10000001 2x0 |  Router lifetime = 9000       | 12
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | 0b10000110 6x0|0b00011010 28  | Type = 1      | Len = 10      | 16
+   +-------------------------------+-------------------------------+
+   |                    EUI-64 of router                           | 20
+   +                                                               +
+   |                    EUI-64 of router                           | 24
+   +-------------------------------+-------------------------------+
+   | Type = TBD-YYY|  Len = 18     |                               | 28
+   +-------------------------------+                               |
+   |                              DODAGID                          | 32
+   +                                                               |
+   |                                                               | 36
+   +                                                               |
+   |                                                               | 40
+   +                               +-------------------------------+
+   |   DODAGID                     |
+   +-------------------------------+
+
+   The total number of bytes needed is 52 bytes.
+
 3.  Security Considerations
 
    TBD.
@@ -327,18 +381,18 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
 5.  References
 
+5.1.  Normative References
 
 
 
 
 
 
-Richardson               Expires April 21, 2017                 [Page 6]
+
+Richardson               Expires April 21, 2017                 [Page 7]
 
 Internet-Draft                IE for ICMPv6                 October 2016
 
-
-5.1.  Normative References
 
    [I-D.ietf-6lo-dispatch-iana-registry]
               Chakrabarti, S., Montenegro, G., Droms, R., and j.
@@ -382,28 +436,29 @@ Internet-Draft                IE for ICMPv6                 October 2016
               DOI 10.17487/RFC6282, September 2011,
               <http://www.rfc-editor.org/info/rfc6282>.
 
-
-
-
-
-
-
-
-Richardson               Expires April 21, 2017                 [Page 7]
-
-Internet-Draft                IE for ICMPv6                 October 2016
-
-
    [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
               Bormann, "Neighbor Discovery Optimization for IPv6 over
               Low-Power Wireless Personal Area Networks (6LoWPANs)",
               RFC 6775, DOI 10.17487/RFC6775, November 2012,
               <http://www.rfc-editor.org/info/rfc6775>.
 
+
+
+
+Richardson               Expires April 21, 2017                 [Page 8]
+
+Internet-Draft                IE for ICMPv6                 October 2016
+
+
    [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
               Constrained-Node Networks", RFC 7228,
               DOI 10.17487/RFC7228, May 2014,
               <http://www.rfc-editor.org/info/rfc7228>.
+
+   [RFC7400]  Bormann, C., "6LoWPAN-GHC: Generic Header Compression for
+              IPv6 over Low-Power Wireless Personal Area Networks
+              (6LoWPANs)", RFC 7400, DOI 10.17487/RFC7400, November
+              2014, <http://www.rfc-editor.org/info/rfc7400>.
 
 5.2.  Informative References
 
@@ -445,7 +500,8 @@ Appendix A.  appendix
 
 
 
-Richardson               Expires April 21, 2017                 [Page 8]
+
+Richardson               Expires April 21, 2017                 [Page 9]
 
 Internet-Draft                IE for ICMPv6                 October 2016
 
@@ -501,4 +557,4 @@ Author's Address
 
 
 
-Richardson               Expires April 21, 2017                 [Page 9]
+Richardson               Expires April 21, 2017                [Page 10]

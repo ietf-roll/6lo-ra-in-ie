@@ -36,6 +36,7 @@ normative:
   RFC6775:
   RFC6282:
   RFC2461:
+  RFC7400:
   I-D.ietf-6lo-dispatch-iana-registry:
   I-D.ietf-6tisch-architecture:
   ieee802154:
@@ -148,52 +149,55 @@ according to {{RFC6282}} (as updated by {{I-D.ietf-6lo-dispatch-iana-registry}}.
 ## Protocol Example
 
 Typically a Router Advertisement will be placed inside the Sub-Type.
-The entire structure typically looks like:
+The entire structure has an IPv6 header,  followed by an ICMPv6 header
+containing an Router Advertisement Header. Options within the RA
+would include the Source Link Layer Address option, and a newly created
+Network Identity option.
 
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |Ver  6 | TC = 0        |           Flow Label = 0              |
+    |Ver  6 | TC = 0        |           Flow Label = 0              | 0
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |         Payload Length        |  NH = 58      | Hop Lmt = 1   |
+    |         Payload Length        |  NH = 58      | Hop Lmt = 1   | 4
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                                                               |
+    |                                                               | 8
     +                                                               +
-    |                                                               |
+    |                                                               | 12
     +                         Source Address                        +
-    |                           fe80::LL                            |
+    |                           fe80::LL                            | 16
     +                                                               +
-    |                                                               |
+    |                                                               | 20
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                                                               |
+    |                                                               | 24
     +                                                               +
-    |                                                               |
+    |                                                               | 28
     +                      Destination Address                      +
-    |                           fe02::1                             |
+    |                           fe02::1                             | 32
     +                                                               +
-    |                                                               |
+    |                                                               | 36
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |  Type = 134   |  Code = 0     |          Checksum             |
+    |  Type = 134   |  Code = 0     |          Checksum             | 40
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | HL = 0        |0|0|  Reserved |  Router lifetime = 9000       |
+    | HL = 0        |0|0|  Reserved |  Router lifetime = 9000       | 44
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                         Reachable Time   = 0  XXX             |
+    |                         Reachable Time   = 0  XXX             | 44
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                          Retrans Timer   = 0  XXX             |
+    |                          Retrans Timer   = 0  XXX             | 52
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Type = 1      | Len = 10      |    EUI-64 of router           |
+    | Type = 1 SLLA | Len = 10      |    EUI-64 of router           | 56
     +-+-+-+-+-+-+-+-+-+-+-+---------+                               +
-    |                    EUI-64 of router                           |
+    |                    EUI-64 of router                           | 60
     +                               +---------------+---------------+
-    | EUI-64 of router              | Type = TBD-YYY|  Len = 18     |
+    | EUI-64 of router              | Type = TBD-YYY|  Len = 18     | 64
     +-------------------------------+-------------------------------+
-    |                             DODAGID                           |
+    |                             DODAGID                           | 68
     +                                                               |
-    |                                                               |
+    |                                                               | 72
     +                                                               |
-    |                                                               |
+    |                                                               | 76
     +                                                               |
-    |                                                               |
+    |                                                               | 80
     +---------------------------------------------------------------+
 
 When compressed by {{RFC6282}}, this becomes:
@@ -228,6 +232,38 @@ When compressed by {{RFC6282}}, this becomes:
     +---------------------------------------------------------------+
 
 The total number of bytes needed is 56 bytes.
+
+Applying {{RFC7400}} results in:
+
+    +---------------------------------------------------------------+
+    | 0 | 1 | 1 |TF= 11 |NH |HLIM=01|CID|SAC|  SAM  | M |DAC|  DAM  | 0
+    +   |   |   |       | 1 |       | 0 | 0 | 0   1 + 1 + 0 + 1   1 +
+    +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+    |   dstXX = 0x01                | NHC = 0b1101 1111 (RFC7400)   | 4
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | 0b0000 0100   |  Type = 134   |  Code = 0     |          Check| 8
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | sum           |0b10000001 2x0 |  Router lifetime = 9000       | 12
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | 0b10000110 6x0|0b00011010 28  | Type = 1      | Len = 10      | 16
+    +-------------------------------+-------------------------------+
+    |                    EUI-64 of router                           | 20
+    +                                                               +
+    |                    EUI-64 of router                           | 24
+    +-------------------------------+-------------------------------+
+    | Type = TBD-YYY|  Len = 18     |                               | 28
+    +-------------------------------+                               |
+    |                              DODAGID                          | 32
+    +                                                               |
+    |                                                               | 36
+    +                                                               |
+    |                                                               | 40
+    +                               +-------------------------------+
+    |   DODAGID                     |
+    +-------------------------------+
+
+The total number of bytes needed is 52 bytes.
+
 
 # Security Considerations
 
