@@ -17,3 +17,7 @@ ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 version:
 	echo Version: ${VERSION}
 
+clean: 
+	-rm -f ${DRAFT}-${VERSION}.txt ${DRAFT}.txt
+
+
