@@ -7,7 +7,6 @@ ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 
 %.xml: %.mkd
 	kramdown-rfc2629 ${DRAFT}.mkd >${DRAFT}.xml
-	git add ${DRAFT}.xml
 
 %.txt: %.xml
 	unset DISPLAY; XML_LIBRARY=$(XML_LIBRARY):./src xml2rfc $? $@

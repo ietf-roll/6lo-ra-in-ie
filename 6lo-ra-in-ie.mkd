@@ -1,6 +1,6 @@
 ---
 title: 802.15.4 Informational Element encapsulation of ICMPv6 Router Advertisements
-# abbrev: 6lo-ra-in-ie
+abbrev: IE for ICMPv6
 docname: draft-richardson-6lo-ra-in-ie-00
 
 # stand_alone: true
@@ -32,6 +32,12 @@ normative:
   RFC2119:
   RFC7228:
   I-D.ietf-6tisch-minimal:
+  I-D.kivinen-802-15-ie:
+  RFC6775:
+  RFC6282:
+  RFC2461:
+  I-D.ietf-6lo-dispatch-iana-registry:
+  I-D.ietf-6tisch-architecture:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
     title: "802.15.4-2015 - IEEE Standard for Low-Rate Wireless Personal Area Networks (WPANs)"
@@ -43,6 +49,9 @@ informative:
   RFC4655:
   RFC7554:
   RFC4191:
+  RFC2460:
+  RFC4861:
+  RFC4443:
 
 --- abstract
 
@@ -57,10 +66,12 @@ Enhanced Beacon, providing standard IPv6 router/host protocol.
 
 # Introduction        {#problems}
 
-Explain why broadcasts are rare, and why we need them.
-What the Enhanced Beacon is, and what Information Elements are, and how the IETF has a subtype for that area.
+{{I-D.ietf-6tisch-architecture}} describes the use of the time-slotted channel
+hopping (TSCH) mode of {{ieee802154}}.  As further details in
+{{I-D.ietf-6tisch-minimal}}, an Extended Beacon is transmitted during a slot
+designated a broadcast slot.
 
-Explain what kind of things could be placed in Information Elements, how big they could be, and how they could be compressed.
+EDNOTE: Explain why broadcasts are rare, and why we need them. What the Enhanced Beacon is, and what Information Elements are, and how the IETF has a subtype for that area.  Explain what kind of things could be placed in Information Elements, how big they could be, and how they could be compressed.
 
 ## Terminology          {#Terminology}
 
@@ -70,13 +81,165 @@ and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
 {{!RFC2119}} and indicate requirement levels for compliant STuPiD
 implementations.
 
+## Layer-2 Synchronization
+
+As explained in section 6 of {{I-D.ietf-6tisch-minimal}}, the Extended Beacon
+has a number of purposes: synchronization of ASN and Join Metric, timeslot
+template identifier, the channel hopping sequence identifier, TSCH SlotFrame and
+Link IE.
+
+The Extended Beacon is used by operating nodes to correct drift to their clock,
+by nodes on medium length sleeps to resynchronize their ASN,
+by nodes that have slept through a network rekey to rediscover the network,
+and by new Joining Nodes (pledges) to learn about the existance of the network.
+
+There are a limited number of timeslots designated as a broadcast slot by each
+router. These slots are rare, and with 10ms slots, with a slot-frame length of
+100, there may be only 1 slot/s for the beacon.
+
+## Layer-3 synchronization IPv6 Router solicitations and advertisements
+
+At layer 3, {{RFC2461}} defines a mechanism by which nodes learn about
+routers by listening for multicasted Router Advertisements (RA). If no RA is
+heard within a set time, then a Router Solicitation (RS) may be multicast,
+to which an RA will be received, usually unicast.
+
+Although {{RFC6775}} reduces the amount of multicast necessary to do address
+resolution via Neighbor Solicitation messages, it still requires multicast
+of either RAs or RS.  This is an expensive operation for two reasons: there
+are few multicast timeslots for unsolicited RAs; if a pledge node does not
+hear an RA, and decides to send a RS (consuming a broadcast aloha slot with
+unencrypted traffic), many unicast RS may be sent in response.
+
+This is a particularly acute issue for the join process for the following
+reasons:
+
+1. use of a multicast slot by even a non-malicious unauthenticated node for
+a Router Solicitation may overwhelm that time slot.
+
+2. it may require many seconds of on-time before a new pledge hears a Router
+Soliciation that it can use.
+
+3. a new pledge may listen to many Enhanced Beacons before it can pick an
+   appropriate network and/or closest Join Assistant to attach to. If it must
+   listen for a RS as well as find the Enhanced Beacon, then the process may
+   take a very long time.
+
 # Protocol Definition
+
+{{I-D.kivinen-802-15-ie}} creates a registry for new IETF IE subtypes.
+This document allocates a new subtype TBD-XXX.
+
+The base IE subtype structure is as follows.  As explained in
+{{I-D.kivinen-802-15-ie}} the length of the Sub-Type Content can be calculated.
+
+                         1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |   TBD-XXX     |       6LoRH encoded structure                 |
+    +-+-+-+-+-+-+-+-+                                               |
+    ~                       Sub-Type Content                        ~
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+Inside the Sub-Type content should be placed compressed packets
+according to {{RFC6282}} (as updated by {{I-D.ietf-6lo-dispatch-iana-registry}}.
+
+## Protocol Example
+
+Typically a Router Advertisement will be placed inside the Sub-Type.
+The entire structure typically looks like:
+
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |Ver  6 | TC = 0        |           Flow Label = 0              |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |         Payload Length        |  NH = 58      | Hop Lmt = 1   |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                                                               |
+    +                                                               +
+    |                                                               |
+    +                         Source Address                        +
+    |                           fe80::LL                            |
+    +                                                               +
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                                                               |
+    +                                                               +
+    |                                                               |
+    +                      Destination Address                      +
+    |                           fe02::1                             |
+    +                                                               +
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  Type = 134   |  Code = 0     |          Checksum             |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | HL = 0        |0|0|  Reserved |  Router lifetime = 9000       |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                         Reachable Time   = 0  XXX             |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                          Retrans Timer   = 0  XXX             |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Type = 1      | Len = 10      |    EUI-64 of router           |
+    +-+-+-+-+-+-+-+-+-+-+-+---------+                               +
+    |                    EUI-64 of router                           |
+    +                               +---------------+---------------+
+    | EUI-64 of router              | Type = TBD-YYY|  Len = 18     |
+    +-------------------------------+-------------------------------+
+    |                             DODAGID                           |
+    +                                                               |
+    |                                                               |
+    +                                                               |
+    |                                                               |
+    +                                                               |
+    |                                                               |
+    +---------------------------------------------------------------+
+
+When compressed by {{RFC6282}}, this becomes:
+
+    +---------------------------------------------------------------+
+    | 0 | 1 | 1 |TF= 11 |NH |HLIM=01|CID|SAC|  SAM  | M |DAC|  DAM  | 0
+    +   |   |   |       | 0 |       | 0 | 0 | 0   1 + 1 + 0 + 1   1 +
+    +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+    | NH = 0x58                     |   dstXX = 0x01                | 4
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  Type = 134   |  Code = 0     |          Checksum             | 8
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | HL = 0        |0|0|  Reserved |  Router lifetime = 9000       | 12
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                         Reachable Time   = 0  XXX             | 16
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                          Retrans Timer   = 0  XXX             | 20
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | Type = 1      | Len = 10      |    EUI-64 of router           | 24
+    +-+-+-+-+-+-+-+-+-+-+-+---------+                               +
+    |                    EUI-64 of router                           | 28
+    +                               +---------------+---------------+
+    | EUI-64 of router              | Type = TBD-YYY|  Len = 18     | 32
+    +-------------------------------+-------------------------------+
+    |                             DODAGID                           | 36
+    +                                                               |
+    |                                                               | 40
+    +                                                               |
+    |                                                               | 44
+    +                                                               |
+    |                                                               | 48
+    +---------------------------------------------------------------+
+
+The total number of bytes needed is 56 bytes.
 
 # Security Considerations
 
+TBD.
+
 # IANA Considerations
 
-Allocate a new number from Registry FOO.
+Allocate a new number TBD-XXX from Registry IETF IE Sub-type ID.
+This entry should be called 6LoRH-in-IE.
+
+Allocate a new number TBD-YYY from Neighbor Discovery Option Types (RFC2461)
+with the name "Constrained Network Identification".
 
 --- back
 
