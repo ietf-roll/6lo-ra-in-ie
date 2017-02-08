@@ -1,0 +1,198 @@
+---
+title: 802.15.4 Informational Element encapsulation of 6tisch Join Information
+abbrev: IE for ICMPv6
+docname: draft-richardson-6tisch-join-extended-beacon-00
+
+# stand_alone: true
+
+ipr: trust200902
+area: Internet
+wg: 6lo Working Group
+kw: Internet-Draft
+cat: info
+
+coding: us-ascii
+pi:    # can use array (if all yes) or hash here
+#  - toc
+#  - sortrefs
+#  - symrefs
+  toc: yes
+  sortrefs:   # defaults to yes
+  symrefs: yes
+
+author:
+      -
+        ins: M. Richardson
+        name: Michael Richardson
+        org: Sandelman Software Works
+        email: mcr+ietf@sandelman.ca
+
+
+normative:
+  RFC2119:
+  I-D.ietf-6tisch-minimal:
+  I-D.kivinen-802-15-ie:
+  RFC6775:
+  RFC2461:
+  I-D.ietf-6tisch-architecture:
+  ieee802154:
+    target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
+    title: "802.15.4-2015 - IEEE Standard for Low-Rate Wireless Personal Area Networks (WPANs)"
+    author:
+      ins: "IEEE Standard"
+    date: 2015
+
+informative:
+  I-D.ietf-6tisch-minimal-security:
+  I-D.ietf-6tisch-dtsecurity-secure-join:
+
+--- abstract
+
+In TSCH mode of 802.15.4, as described by {{I-D.ietf-6tisch-minimal}},
+opportunities for broadcasts are limited to specific times and specific
+channels.  An enhanced beacon must be broadcast periodically by every router
+to keep all nodes in sync.  This document provides a mechanism by which small
+details critical for new nodes (pledges) and long sleeping nodes may be
+carried within the Enhanced Beacon.
+
+--- middle
+
+# Introduction        {#problems}
+
+{{I-D.ietf-6tisch-architecture}} describes the use of the time-slotted channel
+hopping (TSCH) mode of {{ieee802154}}.  As further details in
+{{I-D.ietf-6tisch-minimal}}, an Enhanced Beacon is transmitted during a slot
+designated a broadcast slot.
+
+EDNOTE: Explain why broadcasts are rare, and why we need them. What the Enhanced Beacon is, and what Information Elements are, and how the IETF has a subtype for that area.  Explain what kind of things could be placed in Information Elements, how big they could be, and how they could be compressed.
+
+## Terminology          {#Terminology}
+
+In this document, the key words "MUST", "MUST NOT", "REQUIRED",
+"SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
+{{!RFC2119}} and indicate requirement levels for compliant STuPiD
+implementations.
+
+## Layer-2 Synchronization
+
+As explained in section 6 of {{I-D.ietf-6tisch-minimal}}, the Enhanced Beacon
+has a number of purposes: synchronization of ASN and Join Metric, timeslot
+template identifier, the channel hopping sequence identifier, TSCH SlotFrame and
+Link IE.
+
+The Enhanced Beacon is used by operating nodes to correct drift in their clock,
+by nodes on medium length sleeps to resynchronize their ASN, 
+by nodes that have slept through a network rekey to rediscover the network,
+and by new Joining Nodes (pledges) to learn about the existance of the network.
+
+There are a limited number of timeslots designated as a broadcast slot by each
+router. These slots are rare, and with 10ms slots, with a slot-frame length of
+100, there may be only 1 slot/s for the beacon.
+
+## Layer-3 synchronization IPv6 Router solicitations and advertisements
+
+At layer 3, {{RFC2461}} defines a mechanism by which nodes learn about
+routers by listening for multicasted Router Advertisements (RA). If no RA is
+heard within a set time, then a Router Solicitation (RS) may be multicast,
+to which an RA will be received, usually unicast.
+
+Although {{RFC6775}} reduces the amount of multicast necessary to do address
+resolution via Neighbor Solicitation messages, it still requires multicast
+of either RAs or RS.  This is an expensive operation for two reasons: there
+are few multicast timeslots for unsolicited RAs; if a pledge node does not
+hear an RA, and decides to send a RS (consuming a broadcast aloha slot with
+unencrypted traffic), many unicast RS may be sent in response.
+
+This is a particularly acute issue for the join process for the following
+reasons:
+
+1. use of a multicast slot by even a non-malicious unauthenticated node for
+a Router Solicitation may overwhelm that time slot.
+
+2. it may require many seconds of on-time before a new pledge hears a Router
+Soliciation that it can use.
+
+3. a new pledge may listen to many Enhanced Beacons before it can pick an
+   appropriate network and/or closest Join Assistant to attach to. If it must
+   listen for a RS as well as find the Enhanced Beacon, then the process may
+   take a very long time.
+
+# Protocol Definition
+
+{{I-D.kivinen-802-15-ie}} creates a registry for new IETF IE subtypes.
+This document allocates a new subtype TBD-XXX.
+
+This document documents a new IE subtype structure is as follows.  As explained in
+{{I-D.kivinen-802-15-ie}} the length of the Sub-Type Content can be calculated
+from the container, so no length information is necessary.
+
+                         1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |   TBD-XXX     |J|I|R| R E S V |         network ID            |
+    +-+-+-+-+-+-+-+-+-+-+-+---------+                               |
+    |                           network ID                          |
+    +                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |      network ID               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+J
+: the Join Proxy flag is set if the sending node will operate as a Join Proxy
+according to {{I-D.ietf-6tisch-minimal-security}}.
+
+I
+: the Initiate Join flag is set if this network supports pledges initiating the
+join process themselves according to {{I-D.ietf-6tisch-minimal-security}}. If not set, then the pledge 
+should do an NS DAD operation ({{RFC6775}} section 4.3, explained in {{I-D.ietf-6tisch-dtsecurity-secure-join}}) and then remain silent, to wait to be contacted.
+
+R
+: the Router Advertisement flag is set if the sending node will act as a Router for host-only nodes that need addressing via unicast Router Solicitation messages.
+
+network ID
+: this is an opaque 16-byte identifier that uniquely identifies this network,
+potentially among many networks that are operating in the same frequencies 
+in overlapping physical space.
+
+In a 6tisch network, where RPL is used as the mesh routing protocol, the
+network ID SHOULD be constructed from a SHA256 hash of the DODAGID of the
+network.  The result will be a 32-byte hash, and the lower 16-bytes should be
+used. 
+
+
+## Protocol Example
+
+Here are three examples of processing.
+
+
+# Security Considerations
+
+All of the contents of this Information Element are sent in the clear.  The
+containing Enhanced Beacon is not encrypted, but may be authenticated to
+nodes which have already received network-wide keying material.
+
+# Privacy Considerations
+
+The use of a network ID may reveal information about the network.  The use of
+a SHA256 hash of the DODAGID, rather than using the DODAGID directly provides
+some cover the addresses used within the network.  The DODAGID is usually the
+IPv6 address of the root of the RPL mesh.
+
+# IANA Considerations
+
+Allocate a new number TBD-XXX from Registry IETF IE Sub-type ID.
+This entry should be called 6LoRH-in-IE.
+
+Allocate a new number TBD-YYY from Neighbor Discovery Option Types (RFC2461)
+with the name "Constrained Network Identification".
+
+--- back
+
+# Change history
+
+This is an evolution of an earlier proposal which provided for storing an entire
+IPv6 Router Adverisement in an Informational Element.  It was deemed too general
+a solution, possibly subject to mis-use.  This proposal restricts the use to just
+the key pieces of information required.
+
+--- fluff
