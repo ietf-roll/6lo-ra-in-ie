@@ -1,4 +1,4 @@
-DRAFT:=6lo-ra-in-ie
+DRAFT:=6tisch-join-extended-beacon
 VERSION:=$(shell ./getver ${DRAFT}.mkd )
 
 ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt

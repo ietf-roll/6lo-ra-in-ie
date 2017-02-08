@@ -1,7 +1,7 @@
 ---
 title: 802.15.4 Informational Element encapsulation of ICMPv6 Router Advertisements
 abbrev: IE for ICMPv6
-docname: draft-richardson-6lo-ra-in-ie-00
+docname: draft-richardson-6tisch-join-extended-beacon-00
 
 # stand_alone: true
 

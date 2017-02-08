@@ -4,13 +4,13 @@
 
 6lo Working Group                                          M. Richardson
 Internet-Draft                                  Sandelman Software Works
-Intended status: Informational                          October 18, 2016
-Expires: April 21, 2017
+Intended status: Informational                         February 08, 2017
+Expires: August 12, 2017
 
 
      802.15.4 Informational Element encapsulation of ICMPv6 Router
                              Advertisements
-                    draft-richardson-6lo-ra-in-ie-00
+            draft-richardson-6tisch-join-extended-beacon-00
 
 Abstract
 
@@ -37,11 +37,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 21, 2017.
+   This Internet-Draft will expire on August 12, 2017.
 
 Copyright Notice
 
-   Copyright (c) 2016 IETF Trust and the persons identified as the
+   Copyright (c) 2017 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Richardson               Expires April 21, 2017                 [Page 1]
+Richardson               Expires August 12, 2017                [Page 1]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
    include Simplified BSD License text as described in Section 4.e of
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Richardson               Expires April 21, 2017                 [Page 2]
+Richardson               Expires August 12, 2017                [Page 2]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
    The Extended Beacon is used by operating nodes to correct drift to
@@ -165,9 +165,9 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
 
 
-Richardson               Expires April 21, 2017                 [Page 3]
+Richardson               Expires August 12, 2017                [Page 3]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
    The base IE subtype structure is as follows.  As explained in
@@ -221,9 +221,9 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
 
 
-Richardson               Expires April 21, 2017                 [Page 4]
+Richardson               Expires August 12, 2017                [Page 4]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
     0                   1                   2                   3
@@ -277,9 +277,9 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
 
 
-Richardson               Expires April 21, 2017                 [Page 5]
+Richardson               Expires August 12, 2017                [Page 5]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
    +---------------------------------------------------------------+
@@ -333,9 +333,9 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
 
 
-Richardson               Expires April 21, 2017                 [Page 6]
+Richardson               Expires August 12, 2017                [Page 6]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
    +---------------------------------------------------------------+
@@ -389,30 +389,30 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
 
 
-Richardson               Expires April 21, 2017                 [Page 7]
+Richardson               Expires August 12, 2017                [Page 7]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
    [I-D.ietf-6lo-dispatch-iana-registry]
               Chakrabarti, S., Montenegro, G., Droms, R., and j.
               woodyatt, "6lowpan ESC Dispatch Code Points and
-              Guidelines", draft-ietf-6lo-dispatch-iana-registry-05
-              (work in progress), September 2016.
+              Guidelines", draft-ietf-6lo-dispatch-iana-registry-07
+              (work in progress), December 2016.
 
    [I-D.ietf-6tisch-architecture]
               Thubert, P., "An Architecture for IPv6 over the TSCH mode
-              of IEEE 802.15.4", draft-ietf-6tisch-architecture-10 (work
-              in progress), June 2016.
+              of IEEE 802.15.4", draft-ietf-6tisch-architecture-11 (work
+              in progress), January 2017.
 
    [I-D.ietf-6tisch-minimal]
-              Vilajosana, X. and K. Pister, "Minimal 6TiSCH
-              Configuration", draft-ietf-6tisch-minimal-16 (work in
-              progress), June 2016.
+              Vilajosana, X., Pister, K., and T. Watteyne, "Minimal
+              6TiSCH Configuration", draft-ietf-6tisch-minimal-19 (work
+              in progress), January 2017.
 
    [I-D.kivinen-802-15-ie]
               Kivinen, T. and P. Kinney, "IEEE 802.15.4 Information
-              Element for IETF", draft-kivinen-802-15-ie-03 (work in
+              Element for IETF", draft-kivinen-802-15-ie-04 (work in
               progress), October 2016.
 
    [ieee802154]
@@ -445,9 +445,9 @@ Internet-Draft                IE for ICMPv6                 October 2016
 
 
 
-Richardson               Expires April 21, 2017                 [Page 8]
+Richardson               Expires August 12, 2017                [Page 8]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
    [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
@@ -501,9 +501,9 @@ Appendix A.  appendix
 
 
 
-Richardson               Expires April 21, 2017                 [Page 9]
+Richardson               Expires August 12, 2017                [Page 9]
 
-Internet-Draft                IE for ICMPv6                 October 2016
+Internet-Draft                IE for ICMPv6                February 2017
 
 
 Author's Address
@@ -557,4 +557,4 @@ Author's Address
 
 
 
-Richardson               Expires April 21, 2017                [Page 10]
+Richardson               Expires August 12, 2017               [Page 10]
