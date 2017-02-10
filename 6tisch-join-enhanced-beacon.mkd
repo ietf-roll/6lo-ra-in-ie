@@ -178,13 +178,13 @@ a SHA256 hash of the DODAGID, rather than using the DODAGID directly provides
 some cover the addresses used within the network.  The DODAGID is usually the
 IPv6 address of the root of the RPL mesh.
 
+An interloper with a radio sniffer would be able to use the network ID to map
+out the extend of the mesh network.
+
 # IANA Considerations
 
 Allocate a new number TBD-XXX from Registry IETF IE Sub-type ID.
-This entry should be called 6LoRH-in-IE.
-
-Allocate a new number TBD-YYY from Neighbor Discovery Option Types (RFC2461)
-with the name "Constrained Network Identification".
+This entry should be called 6tisch-Join-Info.
 
 --- back
 
