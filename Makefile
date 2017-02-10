@@ -17,7 +17,7 @@ ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 version:
 	echo Version: ${VERSION}
 
-clean: 
+clean:
 	-rm -f ${DRAFT}-${VERSION}.txt ${DRAFT}.txt
 
-
+.PRECIOUS: ${DRAFT}.xml

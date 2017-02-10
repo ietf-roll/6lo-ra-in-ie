@@ -1,7 +1,7 @@
 ---
 title: 802.15.4 Informational Element encapsulation of 6tisch Join Information
 abbrev: IE for ICMPv6
-docname: draft-richardson-6tisch-join-extended-beacon-00
+docname: draft-richardson-6tisch-join-enhanced-beacon-00
 
 # stand_alone: true
 
@@ -71,7 +71,7 @@ EDNOTE: Explain why broadcasts are rare, and why we need them. What the Enhanced
 In this document, the key words "MUST", "MUST NOT", "REQUIRED",
 "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
 and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
-{{!RFC2119}} and indicate requirement levels for compliant STuPiD
+{{RFC2119}} and indicate requirement levels for compliant STuPiD
 implementations.
 
 ## Layer-2 Synchronization
@@ -82,7 +82,7 @@ template identifier, the channel hopping sequence identifier, TSCH SlotFrame and
 Link IE.
 
 The Enhanced Beacon is used by operating nodes to correct drift in their clock,
-by nodes on medium length sleeps to resynchronize their ASN, 
+by nodes on medium length sleeps to resynchronize their ASN,
 by nodes that have slept through a network rekey to rediscover the network,
 and by new Joining Nodes (pledges) to learn about the existance of the network.
 
@@ -143,7 +143,7 @@ according to {{I-D.ietf-6tisch-minimal-security}}.
 
 I
 : the Initiate Join flag is set if this network supports pledges initiating the
-join process themselves according to {{I-D.ietf-6tisch-minimal-security}}. If not set, then the pledge 
+join process themselves according to {{I-D.ietf-6tisch-minimal-security}}. If not set, then the pledge
 should do an NS DAD operation ({{RFC6775}} section 4.3, explained in {{I-D.ietf-6tisch-dtsecurity-secure-join}}) and then remain silent, to wait to be contacted.
 
 R
@@ -151,13 +151,13 @@ R
 
 network ID
 : this is an opaque 16-byte identifier that uniquely identifies this network,
-potentially among many networks that are operating in the same frequencies 
+potentially among many networks that are operating in the same frequencies
 in overlapping physical space.
 
 In a 6tisch network, where RPL is used as the mesh routing protocol, the
 network ID SHOULD be constructed from a SHA256 hash of the DODAGID of the
 network.  The result will be a 32-byte hash, and the lower 16-bytes should be
-used. 
+used.
 
 
 ## Protocol Example
