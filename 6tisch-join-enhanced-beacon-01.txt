@@ -1,12 +1,10 @@
 
 
-
-
-6lo Working Group                                          M. Richardson
-Internet-Draft                                  Sandelman Software Works
-Intended status: Informational                            March 10, 2017
-Expires: September 11, 2017
-
+6lo Working Group                                        D. Dujovne, Ed.
+Internet-Draft                                Universidad Diego Portales
+Intended status: Informational                             M. Richardson
+Expires: September 11, 2017                     Sandelman Software Works
+                                                          March 10, 2017   
 
     IEEE802.15.4 Informational Element encapsulation of 6tisch Join
                               Information
@@ -339,6 +337,17 @@ Internet-Draft                IE for ICMPv6                   March 2017
 
 
 Author's Address
+
+   Diego Dujovne (editor)
+   Universidad Diego Portales
+   Escuela de Informatica y Telecomunicaciones
+   Av. Ejercito 441
+   Santiago, Region Metropolitana
+   Chile
+
+   Phone: +56 (2) 676-8121
+   Email: diego.dujovne@mail.udp.cl
+
 
    Michael Richardson
    Sandelman Software Works
