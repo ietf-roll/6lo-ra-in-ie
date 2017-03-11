@@ -22,6 +22,15 @@ pi:    # can use array (if all yes) or hash here
 
 author:
       -
+        ins: D. Dujovne
+        name: Diego Dujovne (editor)
+        org: Universidad Diego Portales
+        street: Escuela de Informatica y Telecomunicaciones, Av. Ejercito 441
+        city: Santiago, Region Metropolitana
+        country: Chile
+        phone: +56 (2) 676-8121
+        email: diego.dujovne@mail.udp.cl
+      -
         ins: M. Richardson
         name: Michael Richardson
         org: Sandelman Software Works

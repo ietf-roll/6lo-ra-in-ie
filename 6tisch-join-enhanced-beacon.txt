@@ -2,10 +2,11 @@
 
 
 
-6lo Working Group                                          M. Richardson
-Internet-Draft                                  Sandelman Software Works
-Intended status: Informational                            March 10, 2017
-Expires: September 11, 2017
+6lo Working Group                                             D. Dujovne
+Internet-Draft                                Universidad Diego Portales
+Intended status: Informational                             M. Richardson
+Expires: September 12, 2017                     Sandelman Software Works
+                                                          March 11, 2017
 
 
     IEEE802.15.4 Informational Element encapsulation of 6tisch Join
@@ -37,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 11, 2017.
+   This Internet-Draft will expire on September 12, 2017.
 
 Copyright Notice
 
@@ -49,15 +50,15 @@ Copyright Notice
    (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
 
 
 
-Richardson             Expires September 11, 2017               [Page 1]
+Dujovne & Richardson   Expires September 12, 2017               [Page 1]
 
 Internet-Draft                IE for ICMPv6                   March 2017
 
 
+   to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
@@ -79,7 +80,7 @@ Table of Contents
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
      7.2.  Informative References  . . . . . . . . . . . . . . . . .   6
    Appendix A.  Change history . . . . . . . . . . . . . . . . . . .   6
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -108,8 +109,7 @@ Table of Contents
 
 
 
-
-Richardson             Expires September 11, 2017               [Page 2]
+Dujovne & Richardson   Expires September 12, 2017               [Page 2]
 
 Internet-Draft                IE for ICMPv6                   March 2017
 
@@ -165,7 +165,7 @@ Internet-Draft                IE for ICMPv6                   March 2017
 
 
 
-Richardson             Expires September 11, 2017               [Page 3]
+Dujovne & Richardson   Expires September 12, 2017               [Page 3]
 
 Internet-Draft                IE for ICMPv6                   March 2017
 
@@ -221,7 +221,7 @@ Internet-Draft                IE for ICMPv6                   March 2017
 
 
 
-Richardson             Expires September 11, 2017               [Page 4]
+Dujovne & Richardson   Expires September 12, 2017               [Page 4]
 
 Internet-Draft                IE for ICMPv6                   March 2017
 
@@ -277,7 +277,7 @@ Internet-Draft                IE for ICMPv6                   March 2017
 
 
 
-Richardson             Expires September 11, 2017               [Page 5]
+Dujovne & Richardson   Expires September 12, 2017               [Page 5]
 
 Internet-Draft                IE for ICMPv6                   March 2017
 
@@ -333,12 +333,22 @@ Appendix A.  Change history
 
 
 
-Richardson             Expires September 11, 2017               [Page 6]
+Dujovne & Richardson   Expires September 12, 2017               [Page 6]
 
 Internet-Draft                IE for ICMPv6                   March 2017
 
 
-Author's Address
+Authors' Addresses
+
+   Diego Dujovne (editor)
+   Universidad Diego Portales
+   Escuela de Informatica y Telecomunicaciones, Av. Ejercito 441
+   Santiago, Region Metropolitana
+   Chile
+
+   Phone: +56 (2) 676-8121
+   Email: diego.dujovne@mail.udp.cl
+
 
    Michael Richardson
    Sandelman Software Works
@@ -379,14 +389,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-Richardson             Expires September 11, 2017               [Page 7]
+Dujovne & Richardson   Expires September 12, 2017               [Page 7]
