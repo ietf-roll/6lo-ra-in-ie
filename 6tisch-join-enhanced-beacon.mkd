@@ -1,7 +1,7 @@
 ---
 title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join Information
 abbrev: IE for ICMPv6
-docname: draft-richardson-6tisch-join-enhanced-beacon-01
+docname: draft-richardson-6tisch-join-enhanced-beacon-02
 
 # stand_alone: true
 
@@ -39,12 +39,12 @@ author:
 
 normative:
   RFC2119:
-  I-D.ietf-6tisch-minimal:
-  I-D.kivinen-802-15-ie:
+  RFC8137:
   RFC6775:
   RFC2461:
   RFC7554:
   I-D.ietf-6tisch-architecture:
+  I-D.ietf-6tisch-minimal-security:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
     title: "802.15.4-2015 - IEEE Standard for Low-Rate Wireless Personal Area Networks (WPANs)"
@@ -53,12 +53,12 @@ normative:
     date: 2015
 
 informative:
-  I-D.ietf-6tisch-minimal-security:
+  RFC8180:
   I-D.ietf-6tisch-dtsecurity-secure-join:
 
 --- abstract
 
-In TSCH mode of IEEE802.15.4, as described by {{I-D.ietf-6tisch-minimal}},
+In TSCH mode of IEEE802.15.4, as described by {{RFC8180}},
 opportunities for broadcasts are limited to specific times and specific
 channels.  Nodes in a TSCH network typically frequently send Enhanced Beacon (EB)
 frames to announce the presence of the network.  This document provides a mechanism by which small
@@ -71,7 +71,7 @@ carried within the Enhanced Beacon.
 
 {{!RFC7554}} describes the use of the time-slotted channel
 hopping (TSCH) mode of {{ieee802154}}.  As further details in
-{{I-D.ietf-6tisch-minimal}}, an Enhanced Beacon is transmitted during a slot
+{{RFC8180}}, an Enhanced Beacon is transmitted during a slot
 designated a broadcast slot.
 
 EDNOTE: Explain why broadcasts are rare, and why we need them. What the Enhanced Beacon is, and what Information Elements are, and how the IETF has a subtype for that area.  Explain what kind of things could be placed in Information Elements, how big they could be, and how they could be compressed.
@@ -86,7 +86,7 @@ implementations.
 
 ## Layer-2 Synchronization
 
-As explained in section 6 of {{I-D.ietf-6tisch-minimal}}, the Enhanced Beacon
+As explained in section 6 of {{RFC8180}}, the Enhanced Beacon
 has a number of purposes: synchronization of ASN and Join Metric, timeslot
 template identifier, the channel hopping sequence identifier, TSCH SlotFrame and
 Link IE.
@@ -129,17 +129,16 @@ Soliciation that it can use.
 
 # Protocol Definition
 
-{{I-D.kivinen-802-15-ie}} creates a registry for new IETF IE subtypes.
+{{RFC8137}} creates a registry for new IETF IE subtypes.
 This document allocates a new subtype TBD-XXX.
 
 This document documents a new IE subtype structure is as follows.  As explained in
-{{I-D.kivinen-802-15-ie}} the length of the Sub-Type Content can be calculated
-from the container, so no length information is necessary.
+{{RFC8137}} the length of the Sub-Type Content can be calculated from the container, so no length information is necessary.  
 
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |   TBD-XXX     |J|I|R| R E S V |         network ID            |
+    |   TBD-XXX     |R|join priority|         network ID            |
     +-+-+-+-+-+-+-+-+-+-+-+---------+                               |
     |                           network ID                          |
     +                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -147,13 +146,10 @@ from the container, so no length information is necessary.
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 J
-: the Join Proxy flag is set if the sending node will operate as a Join Proxy
-according to {{I-D.ietf-6tisch-minimal-security}}.
-
-I
-: the Initiate Join flag is set if this network supports pledges initiating the
-join process themselves according to {{I-D.ietf-6tisch-minimal-security}}. If not set, then the pledge
-should do an NS DAD operation ({{RFC6775}} section 4.3, explained in {{I-D.ietf-6tisch-dtsecurity-secure-join}}) and then remain silent, to wait to be contacted.
+: the Join prority value contains a number from 0 to 0x7f. Lower numbers are considered
+to be a higher preference.  A priority of 0x7f indicates that the announcer should never
+be considered as a viable proxy.  Lower value indicates willing to act as a Join
+Proxy as described in {{I-D.ietf-6tisch-minimal-security}}.
 
 R
 : the Router Advertisement flag is set if the sending node will act as a Router for host-only nodes that need addressing via unicast Router Solicitation messages.
@@ -165,13 +161,13 @@ in overlapping physical space.
 
 In a 6tisch network, where RPL is used as the mesh routing protocol, the
 network ID SHOULD be constructed from a SHA256 hash of the DODAGID of the
-network.  The result will be a 32-byte hash, and the lower 16-bytes should be
-used.
+network.  The result will be a 32-byte hash, and the right-most 16-bytes should be
+used as the network ID.
 
 
 ## Protocol Example
 
-Here are three examples of processing.
+Here will be three examples of processing.
 
 
 # Security Considerations
