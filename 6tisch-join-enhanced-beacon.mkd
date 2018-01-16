@@ -1,7 +1,7 @@
 ---
 title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join Information
 abbrev: IE for ICMPv6
-docname: draft-richardson-6tisch-join-enhanced-beacon-02
+docname: draft-richardson-6tisch-join-enhanced-beacon-03
 
 # stand_alone: true
 
@@ -133,7 +133,7 @@ Soliciation that it can use.
 This document allocates a new subtype TBD-XXX.
 
 This document documents a new IE subtype structure is as follows.  As explained in
-{{RFC8137}} the length of the Sub-Type Content can be calculated from the container, so no length information is necessary.  
+{{RFC8137}} the length of the Sub-Type Content can be calculated from the container, so no length information is necessary.
 
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
