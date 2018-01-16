@@ -1,7 +1,7 @@
 ---
-title: 802.15.4 Informational Element encapsulation of 6tisch Join Information
+title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join Information
 abbrev: IE for ICMPv6
-docname: draft-richardson-6tisch-join-enhanced-beacon-00
+docname: draft-richardson-6tisch-join-enhanced-beacon-01
 
 # stand_alone: true
 
@@ -34,6 +34,7 @@ normative:
   I-D.kivinen-802-15-ie:
   RFC6775:
   RFC2461:
+  RFC7554:
   I-D.ietf-6tisch-architecture:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
@@ -48,10 +49,10 @@ informative:
 
 --- abstract
 
-In TSCH mode of 802.15.4, as described by {{I-D.ietf-6tisch-minimal}},
+In TSCH mode of IEEE802.15.4, as described by {{I-D.ietf-6tisch-minimal}},
 opportunities for broadcasts are limited to specific times and specific
-channels.  An enhanced beacon must be broadcast periodically by every router
-to keep all nodes in sync.  This document provides a mechanism by which small
+channels.  Nodes in a TSCH network typically frequently send Enhanced Beacon (EB)
+frames to announce the presence of the network.  This document provides a mechanism by which small
 details critical for new nodes (pledges) and long sleeping nodes may be
 carried within the Enhanced Beacon.
 
@@ -59,7 +60,7 @@ carried within the Enhanced Beacon.
 
 # Introduction        {#problems}
 
-{{I-D.ietf-6tisch-architecture}} describes the use of the time-slotted channel
+{{!RFC7554}} describes the use of the time-slotted channel
 hopping (TSCH) mode of {{ieee802154}}.  As further details in
 {{I-D.ietf-6tisch-minimal}}, an Enhanced Beacon is transmitted during a slot
 designated a broadcast slot.
@@ -81,10 +82,9 @@ has a number of purposes: synchronization of ASN and Join Metric, timeslot
 template identifier, the channel hopping sequence identifier, TSCH SlotFrame and
 Link IE.
 
-The Enhanced Beacon is used by operating nodes to correct drift in their clock,
-by nodes on medium length sleeps to resynchronize their ASN,
-by nodes that have slept through a network rekey to rediscover the network,
-and by new Joining Nodes (pledges) to learn about the existance of the network.
+The Enhanced Beacon (EB) is used by nodes already part of a TSCH network to annouce its existance.
+Receiving an EB allows a Joining Node (pledge) to learn about the network and synchronize to it.
+The EB may also be used as a means for a node already part of the network to re-synchronize [RFC7554].
 
 There are a limited number of timeslots designated as a broadcast slot by each
 router. These slots are rare, and with 10ms slots, with a slot-frame length of
@@ -182,13 +182,17 @@ a SHA256 hash of the DODAGID, rather than using the DODAGID directly provides
 some cover the addresses used within the network.  The DODAGID is usually the
 IPv6 address of the root of the RPL mesh.
 
+An interloper with a radio sniffer would be able to use the network ID to map
+out the extend of the mesh network.
+
 # IANA Considerations
 
 Allocate a new number TBD-XXX from Registry IETF IE Sub-type ID.
-This entry should be called 6LoRH-in-IE.
+This entry should be called 6tisch-Join-Info.
 
-Allocate a new number TBD-YYY from Neighbor Discovery Option Types (RFC2461)
-with the name "Constrained Network Identification".
+# Acknowledgements
+
+Thomas Watteyne provided extensive editorial comments on the document.
 
 --- back
 
