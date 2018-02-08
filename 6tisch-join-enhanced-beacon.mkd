@@ -1,5 +1,5 @@
 ---
-title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join Information
+title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join and Enrollment Information
 abbrev: IE for ICMPv6
 docname: draft-richardson-6tisch-join-enhanced-beacon-03
 
@@ -117,10 +117,10 @@ This is a particularly acute issue for the join process for the following
 reasons:
 
 1. use of a multicast slot by even a non-malicious unauthenticated node for
-a Router Solicitation may overwhelm that time slot.
+   a Router Solicitation may overwhelm that time slot.
 
 2. it may require many seconds of on-time before a new pledge hears a Router
-Soliciation that it can use.
+   Soliciation that it can use.
 
 3. a new pledge may listen to many Enhanced Beacons before it can pick an
    appropriate network and/or closest Join Assistant to attach to. If it must
@@ -138,16 +138,16 @@ This document documents a new IE subtype structure is as follows.  As explained 
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |   TBD-XXX     |R|join priority|         network ID            |
-    +-+-+-+-+-+-+-+-+-+-+-+---------+                               |
+    |   TBD-XXX     |R|pan priority |proxy prio.  | rank prio.      |
+    +-+-+-+-+-+-+-+-+-+-------------+-------------+-----------------+
     |                                                               |
     +                                                               +
     |                           network ID                          |
     +                                                               +
     |                                                               |
-    +                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |      network ID               |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    +                                                               +
+    |                                                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 J
 : the Join prority value contains a number from 0 to 0x7f. Lower numbers are considered
@@ -164,10 +164,9 @@ potentially among many networks that are operating in the same frequencies
 in overlapping physical space.
 
 In a 6tisch network, where RPL is used as the mesh routing protocol, the
-network ID SHOULD be constructed from a SHA256 hash of the DODAGID of the
-network.  The result will be a 32-byte hash, and the right-most 16-bytes should be
-used as the network ID.
-
+network ID COULD be constructed from a SHA256 hash of the prefix (/64) of the
+network.  In some LLNs where multiple PANIDs may lead to the same management
+device (the JRC), then a value that is unique across all PANs MUST be chosen.
 
 ## Protocol Example
 
