@@ -1,7 +1,7 @@
 ---
 title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join and Enrollment Information
 abbrev: IE for ICMPv6
-docname: draft-richardson-6tisch-join-enhanced-beacon-03
+docname: draft-richardson-6tisch-enrollment-enhanced-beacon-00
 
 # stand_alone: true
 
@@ -74,7 +74,11 @@ hopping (TSCH) mode of {{ieee802154}}.  As further details in
 {{RFC8180}}, an Enhanced Beacon is transmitted during a slot
 designated a broadcast slot.
 
-EDNOTE: Explain why broadcasts are rare, and why we need them. What the Enhanced Beacon is, and what Information Elements are, and how the IETF has a subtype for that area.  Explain what kind of things could be placed in Information Elements, how big they could be, and how they could be compressed.
+EDNOTE: Explain why broadcasts are rare, and why we need them. What the
+Enhanced Beacon is, and what Information Elements are, and how the IETF has a
+subtype for that area.  Explain what kind of things could be placed in
+Information Elements, how big they could be, and how they could be
+compressed.
 
 ## Terminology          {#Terminology}
 
@@ -91,9 +95,12 @@ has a number of purposes: synchronization of ASN and Join Metric, timeslot
 template identifier, the channel hopping sequence identifier, TSCH SlotFrame and
 Link IE.
 
-The Enhanced Beacon (EB) is used by nodes already part of a TSCH network to annouce its existance.
-Receiving an EB allows a Joining Node (pledge) to learn about the network and synchronize to it.
-The EB may also be used as a means for a node already part of the network to re-synchronize [RFC7554].
+The Enhanced Beacon (EB) is used by nodes already part of a TSCH network to
+annouce its existance.
+Receiving an EB allows a Joining Node (pledge) to learn about the network and
+synchronize to it.
+The EB may also be used as a means for a node already part of the network to
+re-synchronize [RFC7554].
 
 There are a limited number of timeslots designated as a broadcast slot by each
 router. These slots are rare, and with 10ms slots, with a slot-frame length of
@@ -133,7 +140,8 @@ reasons:
 This document allocates a new subtype TBD-XXX.
 
 This document documents a new IE subtype structure is as follows.  As explained in
-{{RFC8137}} the length of the Sub-Type Content can be calculated from the container, so no length information is necessary.
+{{RFC8137}} the length of the Sub-Type Content can be calculated from the
+container, so no length information is necessary.
 
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -149,14 +157,34 @@ This document documents a new IE subtype structure is as follows.  As explained 
     |                                                               |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-J
-: the Join prority value contains a number from 0 to 0x7f. Lower numbers are considered
+proxy priority
+: the proxy prority value contains a number from 0 to 0x7f. Lower numbers are considered
 to be a higher preference.  A priority of 0x7f indicates that the announcer should never
-be considered as a viable proxy.  Lower value indicates willing to act as a Join
-Proxy as described in {{I-D.ietf-6tisch-minimal-security}}.
+be considered as a viable enrollment proxy.  Lower value indicates willing to act as a Join
+Proxy as described in {{I-D.ietf-6tisch-minimal-security}}.  Only unenrolled
+pledges look at this value.
+
+pan priority
+: the pan priority is a value set by the 6LBR to indicate the relative
+priority of this LLN compared to those with different PANIDs.  This value may
+be used as part of the enrollment priority, but typically is used by devices
+which have already enrolled, and need to determine which PAN to pick.
+Unenrolled pledges MAY consider this value when selecting a PAN to join.
+Enrolled devices MAY consider this value when looking for an elegible parent device.
+
+rank priority
+: the rank priority is set by the 6LR which sent the beacon and is an
+indication of how willing this 6LR is to serve as an RPL parent within a
+particular network ID.  This is a local value to be determined in other
+work.  It might be calculated from RPL rank, and it may include some
+modifications based upon current number of children, or number of neighbor
+cache entries available.  This value MUST be ignored by pledges, it is for
+enrolled devices only.
 
 R
-: the Router Advertisement flag is set if the sending node will act as a Router for host-only nodes that need addressing via unicast Router Solicitation messages.
+: the Router Advertisement flag is set if the sending node will act as a
+Router for host-only nodes that need addressing via unicast Router
+Solicitation messages.
 
 network ID
 : this is an opaque 16-byte identifier that uniquely identifies this network,
@@ -164,9 +192,10 @@ potentially among many networks that are operating in the same frequencies
 in overlapping physical space.
 
 In a 6tisch network, where RPL is used as the mesh routing protocol, the
-network ID COULD be constructed from a SHA256 hash of the prefix (/64) of the
-network.  In some LLNs where multiple PANIDs may lead to the same management
-device (the JRC), then a value that is unique across all PANs MUST be chosen.
+network ID can be constructed from a SHA256 hash of the prefix (/64) of the
+network.  That is just a suggestion for a default value.
+In some LLNs where multiple PANIDs may lead to the same management device
+(the JRC), then a common value that is the same across all PANs MUST be configured.
 
 ## Protocol Example
 
@@ -176,8 +205,13 @@ Here will be three examples of processing.
 # Security Considerations
 
 All of the contents of this Information Element are sent in the clear.  The
-containing Enhanced Beacon is not encrypted, but may be authenticated to
-nodes which have already received network-wide keying material.
+containing Enhanced Beacon is not encrypted.
+
+The Enhanced Beagon is authenticated at the layer-2 level using 802.15.4
+mechanisms using the network-wide keying material.  Nodes which are enrolled
+will have the network-wide keying material and can validate the beacon.
+
+Pledges which have not yet enrolled are unable to authenticate the beacons.
 
 # Privacy Considerations
 
@@ -201,6 +235,13 @@ Thomas Watteyne provided extensive editorial comments on the document.
 --- back
 
 # Change history
+
+The extension was originally for the use of Pledges only during the
+enrollment/join process.  Additional information was desired for nodes which
+have already enrolled in order to aid in the joining (selecting of a parent)
+of an RPL DAG.  The term "join" was realized to be ambiguous, meaning
+different things to different groups, and so the activity where the pledge
+finds a "Join Proxy" has been named "enrollment"
 
 This is an evolution of an earlier proposal which provided for storing an entire
 IPv6 Router Adverisement in an Informational Element.  It was deemed too general

@@ -1,4 +1,4 @@
-DRAFT:=6tisch-join-enhanced-beacon
+DRAFT:=6tisch-enrollment-enhanced-beacon
 VERSION:=$(shell ./getver ${DRAFT}.mkd )
 
 ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
