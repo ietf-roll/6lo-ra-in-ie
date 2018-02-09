@@ -146,16 +146,18 @@ container, so no length information is necessary.
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |   TBD-XXX     |R|pan priority |proxy prio.  | rank prio.      |
+    |   TBD-XXX     |R| proxy prio. |       rank priority           |
     +-+-+-+-+-+-+-+-+-+-------------+-------------+-----------------+
-    |                                                               |
-    +                                                               +
+    | pan priority  |                                               |
+    +---------------+                                               +
     |                           network ID                          |
     +                                                               +
     |                                                               |
     +                                                               +
     |                                                               |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |               |
+    +-+-+-+-+-+-+-+-+
 
 proxy priority
 : the proxy prority value contains a number from 0 to 0x7f. Lower numbers are considered
@@ -165,15 +167,15 @@ Proxy as described in {{I-D.ietf-6tisch-minimal-security}}.  Only unenrolled
 pledges look at this value.
 
 pan priority
-: the pan priority is a value set by the 6LBR to indicate the relative
+: the pan priority is a value set by the DODAG root to indicate the relative
 priority of this LLN compared to those with different PANIDs.  This value may
 be used as part of the enrollment priority, but typically is used by devices
 which have already enrolled, and need to determine which PAN to pick.
 Unenrolled pledges MAY consider this value when selecting a PAN to join.
-Enrolled devices MAY consider this value when looking for an elegible parent device.
+Enrolled devices MAY consider this value when looking for an eligible parent device.
 
 rank priority
-: the rank priority is set by the 6LR which sent the beacon and is an
+: the rank "priority" is set by the 6LR which sent the beacon and is an
 indication of how willing this 6LR is to serve as an RPL parent within a
 particular network ID.  This is a local value to be determined in other
 work.  It might be calculated from RPL rank, and it may include some
@@ -236,14 +238,16 @@ Thomas Watteyne provided extensive editorial comments on the document.
 
 # Change history
 
-The extension was originally for the use of Pledges only during the
+The rank priority was expanded to 2 bytes.
+
+00: The extension was originally for the use of Pledges only during the
 enrollment/join process.  Additional information was desired for nodes which
 have already enrolled in order to aid in the joining (selecting of a parent)
 of an RPL DAG.  The term "join" was realized to be ambiguous, meaning
 different things to different groups, and so the activity where the pledge
 finds a "Join Proxy" has been named "enrollment"
 
-This is an evolution of an earlier proposal which provided for storing an entire
+-1: This is an evolution of an earlier proposal which provided for storing an entire
 IPv6 Router Adverisement in an Informational Element.  It was deemed too general
 a solution, possibly subject to mis-use.  This proposal restricts the use to just
 the key pieces of information required.
