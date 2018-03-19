@@ -5,8 +5,8 @@
 6lo Working Group                                             D. Dujovne
 Internet-Draft                                Universidad Diego Portales
 Intended status: Informational                             M. Richardson
-Expires: August 12, 2018                        Sandelman Software Works
-                                                       February 08, 2018
+Expires: September 20, 2018                     Sandelman Software Works
+                                                          March 19, 2018
 
 
   IEEE802.15.4 Informational Element encapsulation of 6tisch Join and
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 12, 2018.
+   This Internet-Draft will expire on September 20, 2018.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Dujovne & Richardson     Expires August 12, 2018                [Page 1]
+Dujovne & Richardson   Expires September 20, 2018               [Page 1]
 
-Internet-Draft                IE for ICMPv6                February 2018
+Internet-Draft                IE for ICMPv6                   March 2018
 
 
    to this document.  Code Components extracted from this document must
@@ -74,7 +74,7 @@ Table of Contents
      2.1.  Protocol Example  . . . . . . . . . . . . . . . . . . . .   5
    3.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    4.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .   5
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Dujovne & Richardson     Expires August 12, 2018                [Page 2]
+Dujovne & Richardson   Expires September 20, 2018               [Page 2]
 
-Internet-Draft                IE for ICMPv6                February 2018
+Internet-Draft                IE for ICMPv6                   March 2018
 
 
 1.2.  Layer-2 Synchronization
@@ -165,9 +165,9 @@ Internet-Draft                IE for ICMPv6                February 2018
 
 
 
-Dujovne & Richardson     Expires August 12, 2018                [Page 3]
+Dujovne & Richardson   Expires September 20, 2018               [Page 3]
 
-Internet-Draft                IE for ICMPv6                February 2018
+Internet-Draft                IE for ICMPv6                   March 2018
 
 
 2.  Protocol Definition
@@ -182,16 +182,18 @@ Internet-Draft                IE for ICMPv6                February 2018
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   TBD-XXX     |R|pan priority |proxy prio.  | rank prio.      |
+   |   TBD-XXX     |R| proxy prio. |       rank priority           |
    +-+-+-+-+-+-+-+-+-+-------------+-------------+-----------------+
-   |                                                               |
-   +                                                               +
+   | pan priority  |                                               |
+   +---------------+                                               +
    |                           network ID                          |
    +                                                               +
    |                                                               |
    +                                                               +
    |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |               |
+   +-+-+-+-+-+-+-+-+
 
    proxy priority  the proxy prority value contains a number from 0 to
       0x7f.  Lower numbers are considered to be a higher preference.  A
@@ -201,30 +203,31 @@ Internet-Draft                IE for ICMPv6                February 2018
       [I-D.ietf-6tisch-minimal-security].  Only unenrolled pledges look
       at this value.
 
-   pan priority  the pan priority is a value set by the 6LBR to indicate
-      the relative priority of this LLN compared to those with different
-      PANIDs.  This value may be used as part of the enrollment
-      priority, but typically is used by devices which have already
-      enrolled, and need to determine which PAN to pick.  Unenrolled
-      pledges MAY consider this value when selecting a PAN to join.
-      Enrolled devices MAY consider this value when looking for an
-      elegible parent device.
+   pan priority  the pan priority is a value set by the DODAG root to
+      indicate the relative priority of this LLN compared to those with
+      different PANIDs.  This value may be used as part of the
+      enrollment priority, but typically is used by devices which have
+      already enrolled, and need to determine which PAN to pick.
+      Unenrolled pledges MAY consider this value when selecting a PAN to
+      join.  Enrolled devices MAY consider this value when looking for
+      an eligible parent device.
 
-   rank priority  the rank priority is set by the 6LR which sent the
+   rank priority  the rank "priority" is set by the 6LR which sent the
       beacon and is an indication of how willing this 6LR is to serve as
       an RPL parent within a particular network ID.  This is a local
       value to be determined in other work.  It might be calculated from
       RPL rank, and it may include some modifications based upon current
       number of children, or number of neighbor cache entries available.
+
+
+
+Dujovne & Richardson   Expires September 20, 2018               [Page 4]
+
+Internet-Draft                IE for ICMPv6                   March 2018
+
+
       This value MUST be ignored by pledges, it is for enrolled devices
       only.
-
-
-
-Dujovne & Richardson     Expires August 12, 2018                [Page 4]
-
-Internet-Draft                IE for ICMPv6                February 2018
-
 
    R  the Router Advertisement flag is set if the sending node will act
       as a Router for host-only nodes that need addressing via unicast
@@ -269,18 +272,20 @@ Internet-Draft                IE for ICMPv6                February 2018
    An interloper with a radio sniffer would be able to use the network
    ID to map out the extend of the mesh network.
 
+
+
+
+
+
+Dujovne & Richardson   Expires September 20, 2018               [Page 5]
+
+Internet-Draft                IE for ICMPv6                   March 2018
+
+
 5.  IANA Considerations
 
    Allocate a new number TBD-XXX from Registry IETF IE Sub-type ID.
    This entry should be called 6tisch-Join-Info.
-
-
-
-
-Dujovne & Richardson     Expires August 12, 2018                [Page 5]
-
-Internet-Draft                IE for ICMPv6                February 2018
-
 
 6.  Acknowledgements
 
@@ -299,8 +304,7 @@ Internet-Draft                IE for ICMPv6                February 2018
    [I-D.ietf-6tisch-minimal-security]
               Vucinic, M., Simon, J., Pister, K., and M. Richardson,
               "Minimal Security Framework for 6TiSCH", draft-ietf-
-              6tisch-minimal-security-04 (work in progress), October
-              2017.
+              6tisch-minimal-security-05 (work in progress), March 2018.
 
    [ieee802154]
               IEEE Standard, ., "802.15.4-2015 - IEEE Standard for Low-
@@ -324,19 +328,21 @@ Internet-Draft                IE for ICMPv6                February 2018
               RFC 6775, DOI 10.17487/RFC6775, November 2012,
               <https://www.rfc-editor.org/info/rfc6775>.
 
+
+
+
+
+
+Dujovne & Richardson   Expires September 20, 2018               [Page 6]
+
+Internet-Draft                IE for ICMPv6                   March 2018
+
+
    [RFC7554]  Watteyne, T., Ed., Palattella, M., and L. Grieco, "Using
               IEEE 802.15.4e Time-Slotted Channel Hopping (TSCH) in the
               Internet of Things (IoT): Problem Statement", RFC 7554,
               DOI 10.17487/RFC7554, May 2015, <https://www.rfc-
               editor.org/info/rfc7554>.
-
-
-
-
-Dujovne & Richardson     Expires August 12, 2018                [Page 6]
-
-Internet-Draft                IE for ICMPv6                February 2018
-
 
    [RFC8137]  Kivinen, T. and P. Kinney, "IEEE 802.15.4 Information
               Element for the IETF", RFC 8137, DOI 10.17487/RFC8137, May
@@ -356,21 +362,37 @@ Internet-Draft                IE for ICMPv6                February 2018
 
 Appendix A.  Change history
 
-   The extension was originally for the use of Pledges only during the
-   enrollment/join process.  Additional information was desired for
+   The rank priority was expanded to 2 bytes.
+
+   00: The extension was originally for the use of Pledges only during
+   the enrollment/join process.  Additional information was desired for
    nodes which have already enrolled in order to aid in the joining
    (selecting of a parent) of an RPL DAG.  The term "join" was realized
    to be ambiguous, meaning different things to different groups, and so
    the activity where the pledge finds a "Join Proxy" has been named
    "enrollment"
 
-   This is an evolution of an earlier proposal which provided for
+   -1: This is an evolution of an earlier proposal which provided for
    storing an entire IPv6 Router Adverisement in an Informational
    Element.  It was deemed too general a solution, possibly subject to
    mis-use.  This proposal restricts the use to just the key pieces of
    information required.
 
 Authors' Addresses
+
+
+
+
+
+
+
+
+
+
+Dujovne & Richardson   Expires September 20, 2018               [Page 7]
+
+Internet-Draft                IE for ICMPv6                   March 2018
+
 
    Diego Dujovne (editor)
    Universidad Diego Portales
@@ -389,4 +411,38 @@ Authors' Addresses
 
 
 
-Dujovne & Richardson     Expires August 12, 2018                [Page 7]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dujovne & Richardson   Expires September 20, 2018               [Page 8]
