@@ -5,13 +5,13 @@
 6lo Working Group                                             D. Dujovne
 Internet-Draft                                Universidad Diego Portales
 Intended status: Informational                             M. Richardson
-Expires: September 20, 2018                     Sandelman Software Works
-                                                          March 19, 2018
+Expires: January 18, 2019                       Sandelman Software Works
+                                                           July 17, 2018
 
 
   IEEE802.15.4 Informational Element encapsulation of 6tisch Join and
                          Enrollment Information
-         draft-richardson-6tisch-enrollment-enhanced-beacon-00
+            draft-ietf-6tisch-enrollment-enhanced-beacon-00
 
 Abstract
 
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 20, 2018.
+   This Internet-Draft will expire on January 18, 2019.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 1]
+Dujovne & Richardson    Expires January 18, 2019                [Page 1]
 
-Internet-Draft                IE for ICMPv6                   March 2018
+Internet-Draft                IE for ICMPv6                    July 2018
 
 
    to this document.  Code Components extracted from this document must
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 2]
+Dujovne & Richardson    Expires January 18, 2019                [Page 2]
 
-Internet-Draft                IE for ICMPv6                   March 2018
+Internet-Draft                IE for ICMPv6                    July 2018
 
 
 1.2.  Layer-2 Synchronization
@@ -165,9 +165,9 @@ Internet-Draft                IE for ICMPv6                   March 2018
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 3]
+Dujovne & Richardson    Expires January 18, 2019                [Page 3]
 
-Internet-Draft                IE for ICMPv6                   March 2018
+Internet-Draft                IE for ICMPv6                    July 2018
 
 
 2.  Protocol Definition
@@ -221,9 +221,9 @@ Internet-Draft                IE for ICMPv6                   March 2018
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 4]
+Dujovne & Richardson    Expires January 18, 2019                [Page 4]
 
-Internet-Draft                IE for ICMPv6                   March 2018
+Internet-Draft                IE for ICMPv6                    July 2018
 
 
       This value MUST be ignored by pledges, it is for enrolled devices
@@ -277,9 +277,9 @@ Internet-Draft                IE for ICMPv6                   March 2018
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 5]
+Dujovne & Richardson    Expires January 18, 2019                [Page 5]
 
-Internet-Draft                IE for ICMPv6                   March 2018
+Internet-Draft                IE for ICMPv6                    July 2018
 
 
 5.  IANA Considerations
@@ -298,13 +298,13 @@ Internet-Draft                IE for ICMPv6                   March 2018
 
    [I-D.ietf-6tisch-architecture]
               Thubert, P., "An Architecture for IPv6 over the TSCH mode
-              of IEEE 802.15.4", draft-ietf-6tisch-architecture-13 (work
-              in progress), November 2017.
+              of IEEE 802.15.4", draft-ietf-6tisch-architecture-14 (work
+              in progress), April 2018.
 
    [I-D.ietf-6tisch-minimal-security]
               Vucinic, M., Simon, J., Pister, K., and M. Richardson,
               "Minimal Security Framework for 6TiSCH", draft-ietf-
-              6tisch-minimal-security-05 (work in progress), March 2018.
+              6tisch-minimal-security-06 (work in progress), May 2018.
 
    [ieee802154]
               IEEE Standard, ., "802.15.4-2015 - IEEE Standard for Low-
@@ -333,9 +333,9 @@ Internet-Draft                IE for ICMPv6                   March 2018
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 6]
+Dujovne & Richardson    Expires January 18, 2019                [Page 6]
 
-Internet-Draft                IE for ICMPv6                   March 2018
+Internet-Draft                IE for ICMPv6                    July 2018
 
 
    [RFC7554]  Watteyne, T., Ed., Palattella, M., and L. Grieco, "Using
@@ -389,9 +389,9 @@ Authors' Addresses
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 7]
+Dujovne & Richardson    Expires January 18, 2019                [Page 7]
 
-Internet-Draft                IE for ICMPv6                   March 2018
+Internet-Draft                IE for ICMPv6                    July 2018
 
 
    Diego Dujovne (editor)
@@ -445,4 +445,4 @@ Internet-Draft                IE for ICMPv6                   March 2018
 
 
 
-Dujovne & Richardson   Expires September 20, 2018               [Page 8]
+Dujovne & Richardson    Expires January 18, 2019                [Page 8]
