@@ -1,7 +1,7 @@
 ---
 title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join and Enrollment Information
 abbrev: IE for ICMPv6
-docname: draft-ietf-6tisch-enrollment-enhanced-beacon-00
+docname: draft-richardson-6tisch-enrollment-enhanced-beacon-01
 
 # stand_alone: true
 
@@ -9,7 +9,7 @@ ipr: trust200902
 area: Internet
 wg: 6lo Working Group
 kw: Internet-Draft
-cat: info
+cat: std
 
 coding: us-ascii
 pi:    # can use array (if all yes) or hash here
@@ -146,13 +146,19 @@ container, so no length information is necessary.
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |   TBD-XXX     |R| proxy prio. |       rank priority           |
+    |   TBD-XXX     |R|P| res |  proxy prio |    rank priority      |
     +-+-+-+-+-+-+-+-+-+-------------+-------------+-----------------+
     | pan priority  |                                               |
     +---------------+                                               +
-    |                           network ID                          |
-    +                                                               +
+    |                           Join Proxy lower-64                 |
+    +                        (present if P=1)                       +
     |                                                               |
+    +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |               |                                               |
+    +-+-+-+-+-+-+-+-+                                               +
+    |                           network ID                          |
+    +                   variable length, up to 16 bytes             +
+    ~                                                               ~
     +                                                               +
     |                                                               |
     +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -188,10 +194,24 @@ R
 Router for host-only nodes that need addressing via unicast Router
 Solicitation messages.
 
+P
+: if the Proxy Address bit is set, then the lower 64-bits of the Join Proxy's
+Link Layer address follows the network ID.  If the Proxy Address bit is not set,
+then the Link Layer address of the Join Proxy is identical to the Layer-2 8-byte
+address used to originate this enhanced beacon.
+In either case, the layer-2 address of any IPv6 traffic to the originator of
+this beacon may use the layer-2 address which was used to originate the beacon.
+
+join-proxy lower-64
+: if the P bit is set, then 64 bits (8 bytes) of address are present. The
+Link Layer address of the Join Proxy is fe80 (as for any Link Layer address),
+and the bits given in this field.
+
 network ID
-: this is an opaque 16-byte identifier that uniquely identifies this network,
-potentially among many networks that are operating in the same frequencies
-in overlapping physical space.
+: this is an variable length field, up to 16-bytes in size that uniquely identifies
+this network, potentially among many networks that are operating in the same
+frequencies in overlapping physical space.  The length of this field can be
+calculated as being whatever is left in the Information Element.
 
 In a 6tisch network, where RPL is used as the mesh routing protocol, the
 network ID can be constructed from a SHA256 hash of the prefix (/64) of the
