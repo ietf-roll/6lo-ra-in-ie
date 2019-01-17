@@ -5,13 +5,13 @@
 6lo Working Group                                             D. Dujovne
 Internet-Draft                                Universidad Diego Portales
 Intended status: Standards Track                           M. Richardson
-Expires: July 20, 2019                          Sandelman Software Works
-                                                        January 16, 2019
+Expires: July 21, 2019                          Sandelman Software Works
+                                                        January 17, 2019
 
 
   IEEE802.15.4 Informational Element encapsulation of 6tisch Join and
                          Enrollment Information
-         draft-richardson-6tisch-enrollment-enhanced-beacon-02
+            draft-ietf-6tisch-enrollment-enhanced-beacon-02
 
 Abstract
 
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 20, 2019.
+   This Internet-Draft will expire on July 21, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 1]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 1]
 
 Internet-Draft                IE for ICMPv6                 January 2019
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 2]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 2]
 
 Internet-Draft                IE for ICMPv6                 January 2019
 
@@ -165,7 +165,7 @@ Internet-Draft                IE for ICMPv6                 January 2019
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 3]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 3]
 
 Internet-Draft                IE for ICMPv6                 January 2019
 
@@ -221,7 +221,7 @@ Internet-Draft                IE for ICMPv6                 January 2019
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 4]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 4]
 
 Internet-Draft                IE for ICMPv6                 January 2019
 
@@ -277,7 +277,7 @@ Internet-Draft                IE for ICMPv6                 January 2019
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 5]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 5]
 
 Internet-Draft                IE for ICMPv6                 January 2019
 
@@ -333,7 +333,7 @@ Internet-Draft                IE for ICMPv6                 January 2019
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 6]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 6]
 
 Internet-Draft                IE for ICMPv6                 January 2019
 
@@ -389,7 +389,7 @@ Internet-Draft                IE for ICMPv6                 January 2019
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 7]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 7]
 
 Internet-Draft                IE for ICMPv6                 January 2019
 
@@ -445,4 +445,4 @@ Authors' Addresses
 
 
 
-Dujovne & Richardson      Expires July 20, 2019                 [Page 8]
+Dujovne & Richardson      Expires July 21, 2019                 [Page 8]
