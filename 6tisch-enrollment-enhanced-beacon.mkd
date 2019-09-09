@@ -203,7 +203,7 @@ this beacon may use the layer-2 address which was used to originate the beacon.
 
 join-proxy interface ID
 :  if the P bit is set, then 64 bits (8 bytes) of
-address are present. This field provides the suffix of the Link_Local
+address are present. This field provides the suffix of the Link-Local
 address of the Join Proxy. The associated prefix is well-known as
 fe80::/64.
 
