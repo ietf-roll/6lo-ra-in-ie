@@ -3,7 +3,7 @@ title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join and Enrol
 abbrev: IE for ICMPv6
 docname: draft-ietf-6tisch-enrollment-enhanced-beacon-03
 
-# stand_alone: true
+stand_alone: true
 
 ipr: trust200902
 area: Internet
@@ -39,6 +39,7 @@ author:
 
 normative:
   RFC2119:
+  BCP14: RFC8174
   RFC8137:
   RFC6775:
   RFC4861:
@@ -75,13 +76,12 @@ hopping (TSCH) mode of {{ieee802154}}.  As further details in
 {{RFC8180}}, an Enhanced Beacon is transmitted during a slot
 designated a broadcast slot.
 
-## BCP 14          {#Terminology}
+## Use of BCP 14 Terminology          {#Terminology}
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14 [RFC2119] [RFC8174] when, and only when, they appear in all
-   capitals, as shown here.
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in
+{{BCP14}} {{RFC2119}} when, and only when, they appear in all capitals, as shown here.
 
 Other terminology can be found in {{I-D.ietf-6tisch-architecture}} in section
 2.1.
