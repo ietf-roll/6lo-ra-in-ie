@@ -75,19 +75,13 @@ hopping (TSCH) mode of {{ieee802154}}.  As further details in
 {{RFC8180}}, an Enhanced Beacon is transmitted during a slot
 designated a broadcast slot.
 
-EDNOTE: Explain why broadcasts are rare, and why we need them. What the
-Enhanced Beacon is, and what Information Elements are, and how the IETF has a
-subtype for that area.  Explain what kind of things could be placed in
-Information Elements, how big they could be, and how they could be
-compressed.
+## BCP 14          {#Terminology}
 
-## Terminology          {#Terminology}
-
-In this document, the key words "MUST", "MUST NOT", "REQUIRED",
-"SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
-and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
-{{RFC2119}} and indicate requirement levels for compliant STuPiD
-implementations.
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 Other terminology can be found in {{I-D.ietf-6tisch-architecture}} in section
 2.1.
@@ -141,9 +135,9 @@ reasons:
 # Protocol Definition
 
 {{RFC8137}} creates a registry for new IETF IE subtypes.
-This document allocates a new subtype TBD-XXX.
+This document allocates a new subtype.
 
-This document documents a new IE subtype structure is as follows.  As explained in
+The new IE subtype structure is as follows.  As explained in
 {{RFC8137}} the length of the Sub-Type Content can be calculated from the
 container, so no length information is necessary.
 
@@ -170,7 +164,8 @@ container, so no length information is necessary.
     +-+-+-+-+-+-+-+-+
 
 proxy priority
-: Lower value indicates willing to act as a Join Proxy as described in
+: this field indicates the willingness to act as join proxy.
+Lower value indicates willing to act as a Join Proxy as described in
 {{I-D.ietf-6tisch-minimal-security}}. Values range 0 (most willing)
 to 0x7e (least willing).  A priority of 0x7f indicates that
 the announcer should never be considered as a viable enrollment proxy.   Only
@@ -206,10 +201,11 @@ address used to originate this enhanced beacon.
 In either case, the layer-2 address of any IPv6 traffic to the originator of
 this beacon may use the layer-2 address which was used to originate the beacon.
 
-join-proxy lower-64
-: if the P-flag bit is set, then 64 bits (8 bytes) of address are present. The
-Link Local address of the Join Proxy is fe80 (as for any Link Local address),
-and the bits given in this field.
+join-proxy interface ID
+:  if the P bit is set, then 64 bits (8 bytes) of
+address are present. This field provides the suffix of the Link_Local
+address of the Join Proxy. The associated prefix is well-known as
+fe80::/64.
 
 network ID
 : this is an variable length field, up to 16-bytes in size that uniquely identifies
