@@ -43,7 +43,6 @@ normative:
   RFC8137:
   RFC6775:
   RFC4861:
-  RFC7554:
   I-D.ietf-6tisch-architecture:
   I-D.ietf-6tisch-minimal-security:
   ieee802154:
@@ -56,6 +55,7 @@ normative:
 informative:
   RFC8180:
   RFC6550:
+  RFC7554:
 
 --- abstract
 
@@ -69,7 +69,7 @@ for new nodes (pledges) and long sleeping nodes may be carried within the Enhanc
 
 # Introduction        {#problems}
 
-{{!RFC7554}} describes the use of the time-slotted channel
+{{RFC7554}} describes the use of the time-slotted channel
 hopping (TSCH) mode of {{ieee802154}}.  As further details in
 {{RFC8180}}, an Enhanced Beacon is transmitted during a slot
 designated a broadcast slot.
@@ -96,7 +96,7 @@ annouce its existance.
 Receiving an EB allows a Joining Node (pledge) to learn about the network and
 synchronize to it.
 The EB may also be used as a means for a node already part of the network to
-re-synchronize [RFC7554].
+re-synchronize {{RFC7554}}.
 
 There are a limited number of timeslots designated as a broadcast slot by each
 router. These slots are rare, and with 10ms slots, with a slot-frame length of
