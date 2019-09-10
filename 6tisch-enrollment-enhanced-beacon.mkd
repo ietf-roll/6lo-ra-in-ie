@@ -43,16 +43,16 @@ normative:
   RFC8137:
   RFC6775:
   RFC4861:
-  I-D.ietf-6tisch-architecture:
   I-D.ietf-6tisch-minimal-security:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
-    title: "802.15.4-2015 - IEEE Standard for Low-Rate Wireless Personal Area Networks (WPANs)"
+    title: "802.15.4 - IEEE Standard for Low-Rate Wireless Personal Area Networks (WPANs)"
     author:
       ins: "IEEE Standard"
     date: 2015
 
 informative:
+  I-D.ietf-6tisch-architecture:
   RFC8180:
   RFC6550:
   RFC7554:
@@ -249,20 +249,3 @@ Thomas Watteyne provided extensive editorial comments on the document.
 
 --- back
 
-# Change history
-
-The rank priority was expanded to 2 bytes.
-
-00: The extension was originally for the use of Pledges only during the
-enrollment/join process.  Additional information was desired for nodes which
-have already enrolled in order to aid in the joining (selecting of a parent)
-of an RPL DAG.  The term "join" was realized to be ambiguous, meaning
-different things to different groups, and so the activity where the pledge
-finds a "Join Proxy" has been named "enrollment"
-
--1: This is an evolution of an earlier proposal which provided for storing an entire
-IPv6 Router Adverisement in an Informational Element.  It was deemed too general
-a solution, possibly subject to mis-use.  This proposal restricts the use to just
-the key pieces of information required.
-
---- fluff
