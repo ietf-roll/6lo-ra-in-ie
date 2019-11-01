@@ -1,5 +1,5 @@
 ---
-title: IEEE802.15.4 Informational Element encapsulation of 6tisch Join and Enrollment Information
+title: IEEE 802.15.4 Information Element encapsulation of 6TiSCH Join and Enrollment Information
 abbrev: IE for ICMPv6
 docname: draft-ietf-6tisch-enrollment-enhanced-beacon-05
 
@@ -58,7 +58,7 @@ informative:
 
 --- abstract
 
-In TSCH mode of IEEE STD 802.15.4 opportunities for broadcasts are limited to
+In TSCH mode of IEEE STD 802.15.4, opportunities for broadcasts are limited to
 specific times and specific channels.  Nodes in a TSCH network typically
 frequently send Enhanced Beacon (EB) frames to announce the presence of the
 network.  This document provides a mechanism by which small details critical
@@ -69,8 +69,8 @@ for new nodes (pledges) and long sleeping nodes may be carried within the Enhanc
 # Introduction        {#problems}
 
 {{RFC7554}} describes the use of the time-slotted channel
-hopping (TSCH) mode of {{ieee802154}}.  As further details in
-{{RFC8180}}, an Enhanced Beacon is transmitted during a slot
+hopping (TSCH) mode of {{ieee802154}}.  As further detailed in
+{{RFC8180}}, an Enhanced Beacon (EB) is transmitted during a slot
 designated a broadcast slot.
 
 ## Use of BCP 14 Terminology          {#Terminology}
@@ -85,23 +85,23 @@ Other terminology can be found in {{I-D.ietf-6tisch-architecture}} in section
 
 ## Layer-2 Synchronization
 
-As explained in section 6 of {{RFC8180}}, the Enhanced Beacon
-has a number of purposes: synchronization of ASN and Join Metric, timeslot
-template identifier, the channel hopping sequence identifier, TSCH SlotFrame and
-Link IE.
+As explained in section 6 of {{RFC8180}}, the Enhanced Beacon (EB)
+has a number of purposes: synchronization of ASN and Join Metric, carrying timeslot
+template identifier, carrying the channel hopping sequence identifier, and
+indicating the TSCH SlotFrame.
 
-The Enhanced Beacon (EB) is used by nodes already part of a TSCH network to
-annouce its existance.
+The EB is used by nodes already part of a TSCH network to
+annouce its existence.
 Receiving an EB allows a Joining Node (pledge) to learn about the network and
 synchronize to it.
 The EB may also be used as a means for a node already part of the network to
 re-synchronize {{RFC7554}}.
 
-There are a limited number of timeslots designated as a broadcast slot by each
+There is a limited number of timeslots designated as a broadcast slot by each
 router. These slots are rare, and with 10ms slots, with a slot-frame length of
 100, there may be only 1 slot/s for the beacon.
 
-## Layer-3 synchronization IPv6 Router solicitations and advertisements
+## Layer-3 synchronization: IPv6 Router Solicitations and Advertisements
 
 At layer 3, {{RFC4861}} defines a mechanism by which nodes learn about
 routers by listening for multicasted Router Advertisements (RA). If no RA is
@@ -109,7 +109,7 @@ heard within a set time, then a Router Solicitation (RS) may be multicast,
 to which an RA will be received, usually unicast.
 
 Although {{RFC6775}} reduces the amount of multicast necessary to do address
-resolution via Neighbor Solicitation messages, it still requires multicast
+resolution via Neighbor Solicitation (NS) messages, it still requires multicast
 of either RAs or RS.  This is an expensive operation for two reasons: there
 are few multicast timeslots for unsolicited RAs; if a pledge node does not
 hear an RA, and decides to send a RS (consuming a broadcast aloha slot with
@@ -119,14 +119,14 @@ This is a particularly acute issue for the join process for the following
 reasons:
 
 1. use of a multicast slot by even a non-malicious unauthenticated node for
-   a Router Solicitation may overwhelm that time slot.
+   a Router Solicitation (RS) may overwhelm that time slot.
 
 2. it may require many seconds of on-time before a new pledge hears a Router
-   Soliciation that it can use.
+   Soliciation (RS) that it can use.
 
-3. a new pledge may listen to many Enhanced Beacons before it can pick an
+3. a new pledge may listen to many Enhanced Beacons (EB) before it can pick an
    appropriate network and/or closest Join Assistant to attach to. If it must
-   listen for a RS as well as find the Enhanced Beacon, then the process may
+   listen for a RS as well as find the Enhanced Beacon (EB), then the process may
    take a very long time.
 
 # Protocol Definition
