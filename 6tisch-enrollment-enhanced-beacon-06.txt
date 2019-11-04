@@ -179,28 +179,27 @@ Internet-Draft                IE for ICMPv6                November 2019
    [RFC8137] the length of the Sub-Type Content can be calculated from
    the container, so no length information is necessary.
 
-                            1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |   TBD-XXX     |R|P| res |  proxy prio |    rank priority      |
-       +-+-+-+-+-+-+-+-+-+-------------+-------------+-----------------+
-       | pan priority  |                                               |
-       +---------------+                                               +
-       |                           Join Proxy lower-64                 |
-       +                        (present if P=1)                       +
-       |                                                               |
-       +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |               |                                               |
-       +-+-+-+-+-+-+-+-+                                               +
-       |                           network ID                          |
-       +                   variable length, up to 16 bytes             +
-       ~                                                               ~
-       +                                                               +
-       |                                                               |
-       +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |               |
-       +-+-+-+-+-+-+-+-+
-
+                        1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   TBD-XXX     |R|P| res |  proxy prio |    rank priority      |
+   +-+-+-+-+-+-+-+-+-+-------------+-------------+-----------------+
+   | pan priority  |                                               |
+   +---------------+                                               +
+   |                           Join Proxy lower-64                 |
+   +                        (present if P=1)                       +
+   |                                                               |
+   +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |               |                                               |
+   +-+-+-+-+-+-+-+-+                                               +
+   |                           network ID                          |
+   +                   variable length, up to 16 bytes             +
+   ~                                                               ~
+   +                                                               +
+   |                                                               |
+   +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |               |
+   +-+-+-+-+-+-+-+-+
 
                       Figure 1: IE subtype structure
 
@@ -218,6 +217,7 @@ Internet-Draft                IE for ICMPv6                November 2019
 
    proxy priority  this field indicates the willingness fo the sender to
       act as join proxy.  Lower value indicates greater willingness to
+      act as a Join Proxy as described in
 
 
 
@@ -226,7 +226,6 @@ Dujovne & Richardson       Expires May 7, 2020                  [Page 4]
 Internet-Draft                IE for ICMPv6                November 2019
 
 
-      act as a Join Proxy as described in
       [I-D.ietf-6tisch-minimal-security].  Values range 0x00 (most
       willing) to 0x7e (least willing).  A priority of 0x7f indicates
       that the announcer should never be considered as a viable
@@ -273,7 +272,8 @@ Internet-Draft                IE for ICMPv6                November 2019
    All of the contents of this Information Element are sent in the
    clear.  The containing Enhanced Beacon is not encrypted.
 
-
+   The Enhanced Beagon is authenticated at the layer-2 level using
+   802.15.4 mechanisms using the network-wide keying material.  Nodes
 
 
 
@@ -282,8 +282,6 @@ Dujovne & Richardson       Expires May 7, 2020                  [Page 5]
 Internet-Draft                IE for ICMPv6                November 2019
 
 
-   The Enhanced Beagon is authenticated at the layer-2 level using
-   802.15.4 mechanisms using the network-wide keying material.  Nodes
    which are enrolled will have the network-wide keying material and can
    validate the beacon.
 
@@ -326,6 +324,8 @@ Internet-Draft                IE for ICMPv6                November 2019
               "Minimal Security Framework for 6TiSCH", draft-ietf-
               6tisch-minimal-security-13 (work in progress), October
               2019.
+
+
 
 
 

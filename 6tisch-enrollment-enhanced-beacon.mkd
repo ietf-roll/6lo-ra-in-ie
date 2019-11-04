@@ -141,7 +141,6 @@ The new IE subtype structure is as follows.  As explained in
 {{RFC8137}} the length of the Sub-Type Content can be calculated from the
 container, so no length information is necessary.
 
-~~~~~~~~~~~
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -164,9 +163,7 @@ container, so no length information is necessary.
     |               |
     +-+-+-+-+-+-+-+-+
 
-~~~~~~~~~~~
 {: #iesubtype title="IE subtype structure"}
-{: artwork-align="center"}
 
 R
 : the Router Advertisement R-flag is set if the sending node will act as a
