@@ -1,7 +1,7 @@
 ---
 title: IEEE 802.15.4 Information Element encapsulation of 6TiSCH Join and Enrollment Information
 abbrev: IE for ICMPv6
-docname: draft-ietf-6tisch-enrollment-enhanced-beacon-05
+docname: draft-ietf-6tisch-enrollment-enhanced-beacon-06
 
 stand_alone: true
 
@@ -98,7 +98,7 @@ The EB may also be used as a means for a node already part of the network to
 re-synchronize {{RFC7554}}.
 
 There is a limited number of timeslots designated as a broadcast slot by each
-router. These slots are rare, and with 10ms slots, with a slot-frame length of
+router in the network. These slots are rare, and with 10ms slots, with a slot-frame length of
 100, there may be only 1 slot/s for the beacon.
 
 ## Layer-3 synchronization: IPv6 Router Solicitations and Advertisements
@@ -110,10 +110,10 @@ to which an RA will be received, usually unicast.
 
 Although {{RFC6775}} reduces the amount of multicast necessary to do address
 resolution via Neighbor Solicitation (NS) messages, it still requires multicast
-of either RAs or RS.  This is an expensive operation for two reasons: there
-are few multicast timeslots for unsolicited RAs; if a pledge node does not
-hear an RA, and decides to send a RS (consuming a broadcast aloha slot with
-unencrypted traffic), unicast RS may be sent in response.
+of either RAs or RS.  This is an expensive operation for two reasons: First, there
+are few multicast timeslots for unsolicited RAs; and second, if a pledge node does not
+hear an RA, and decides to send a RS, a broadcast aloha slot is consumed with
+unencrypted traffic. In this case, a unicast RS may be sent in response.
 
 This is a particularly acute issue for the join process for the following
 reasons:
@@ -122,12 +122,15 @@ reasons:
    a Router Solicitation (RS) may overwhelm that time slot.
 
 2. it may require many seconds of on-time before a new pledge hears a Router
-   Soliciation (RS) that it can use.
+   Advertisement (RA) that it can use.
 
 3. a new pledge may listen to many Enhanced Beacons (EB) before it can pick an
    appropriate network and/or closest Join Assistant to attach to. If it must
-   listen for a RS as well as find the Enhanced Beacon (EB), then the process may
+   listen for a RA as well as find the Enhanced Beacon (EB), then the process may
    take a very long time.
+
+This document defines a new IETF IE subtype to provide join and enrollment information to prospective
+pledges in a more efficient way.
 
 # Protocol Definition
 
@@ -160,21 +163,28 @@ container, so no length information is necessary.
     |               |
     +-+-+-+-+-+-+-+-+
 
+{: #iesubtype title="IE subtype structure"}
+
+R
+: the Router Advertisement R-flag is set if the sending node will act as a
+Router for host-only nodes that need addressing via unicast Router
+Solicitation messages.
+
+P
+: if the Proxy Address P-flag is set, then the lower 64-bits of the Join Proxy's
+link-local address follows the network ID.  If the Proxy Address bit is not set,
+then the Link Layer address of the Join Proxy is identical to the Layer-2 8-byte
+address used to originate this enhanced beacon.
+In either case, the destination layer-2 address of
+this beacon may use the layer-2 address which was used to originate the beacon.
+
 proxy priority
-: this field indicates the willingness to act as join proxy.
-Lower value indicates willing to act as a Join Proxy as described in
-{{I-D.ietf-6tisch-minimal-security}}. Values range 0 (most willing)
+: this field indicates the willingness fo the sender to act as join proxy.
+Lower value indicates greater willingness to act as a Join Proxy as described in
+{{I-D.ietf-6tisch-minimal-security}}. Values range 0x00 (most willing)
 to 0x7e (least willing).  A priority of 0x7f indicates that
 the announcer should never be considered as a viable enrollment proxy.   Only
 unenrolled pledges look at this value.
-
-pan priority
-: the pan priority is a value set by the DODAG root to indicate the relative
-priority of this LLN compared to those with different PANIDs.  This value may
-be used as part of the enrollment priority, but typically is used by devices
-which have already enrolled, and need to determine which PAN to pick.
-Unenrolled pledges MAY consider this value when selecting a PAN to join.
-Enrolled devices MAY consider this value when looking for an eligible parent device.
 
 rank priority
 : the rank "priority" is set by the 6LR which sent the beacon and is an
@@ -185,27 +195,22 @@ modifications based upon current number of children, or number of neighbor
 cache entries available.  This value MUST be ignored by pledges, it is for
 enrolled devices only.
 
-R
-: the Router Advertisement R-flag is set if the sending node will act as a
-Router for host-only nodes that need addressing via unicast Router
-Solicitation messages.
+pan priority
+: the pan priority is a value set by the DODAG root to indicate the relative
+priority of this LLN compared to those with different PANIDs.  This value may
+be used as part of the enrollment priority, but typically is used by devices
+which have already enrolled, and need to determine which PAN to pick.
+Unenrolled pledges MAY consider this value when selecting a PAN to join.
+Enrolled devices MAY consider this value when looking for an eligible parent device.
 
-P
-: if the Proxy Address P-flag is set, then the lower 64-bits of the Join Proxy's
-Link Layer address follows the network ID.  If the Proxy Address bit is not set,
-then the Link Layer address of the Join Proxy is identical to the Layer-2 8-byte
-address used to originate this enhanced beacon.
-In either case, the layer-2 address of any IPv6 traffic to the originator of
-this beacon may use the layer-2 address which was used to originate the beacon.
-
-join-proxy interface ID
+Join Proxy lower-64
 :  if the P bit is set, then 64 bits (8 bytes) of
 address are present. This field provides the suffix of the Link-Local
 address of the Join Proxy. The associated prefix is well-known as
 fe80::/64.
 
 network ID
-: this is an variable length field, up to 16-bytes in size that uniquely identifies
+: this is a variable length field, up to 16-bytes in size that uniquely identifies
 this network, potentially among many networks that are operating in the same
 frequencies in overlapping physical space.  The length of this field can be
 calculated as being whatever is left in the Information Element.
@@ -239,12 +244,13 @@ out the extend of the mesh network.
 
 # IANA Considerations
 
-Allocate a new number TBD-XXX from Registry IETF IE Sub-type ID.
+Allocate a new number TBD-XXX from Registry IETF IE Sub-type ID, as defined by {{RFC8137}}.
 This entry should be called 6tisch-Join-Info, and should refer to this document.
 
 # Acknowledgements
 
 Thomas Watteyne provided extensive editorial comments on the document.
+Carles Gomez Montenegro generated a detailed review of the document at WGLC.
 
 --- back
 
