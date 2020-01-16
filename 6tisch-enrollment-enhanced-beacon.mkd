@@ -98,8 +98,10 @@ The EB may also be used as a means for a node already part of the network to
 re-synchronize {{RFC7554}}.
 
 There is a limited number of timeslots designated as a broadcast slot by each
-router in the network. These slots are rare, and with 10ms slots, with a slot-frame length of
-100, there may be only 1 slot/s for the beacon.
+router in the network. Considering 10ms slots and a slot-frame length of 100,
+these slots are rare and could result in only 1 slot/s for a broadcast, which
+needs to be used for the beacon.  Additional broadcasts for Router
+Advertisements, or Neighbor Discovery could even more scarce.
 
 ## Layer-3 synchronization: IPv6 Router Solicitations and Advertisements
 
@@ -251,6 +253,7 @@ This entry should be called 6tisch-Join-Info, and should refer to this document.
 
 Thomas Watteyne provided extensive editorial comments on the document.
 Carles Gomez Montenegro generated a detailed review of the document at WGLC.
+Tim Evens provided a number of useful editorial suggestions.
 
 --- back
 
