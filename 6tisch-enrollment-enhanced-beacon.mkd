@@ -11,7 +11,6 @@ wg: 6lo Working Group
 kw: Internet-Draft
 cat: std
 
-coding: us-ascii
 pi:    # can use array (if all yes) or hash here
 #  - toc
 #  - sortrefs
@@ -75,10 +74,7 @@ designated a broadcast slot.
 
 ## Use of BCP 14 Terminology          {#Terminology}
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-"OPTIONAL" in this document are to be interpreted as described in
-{{BCP14}} {{RFC2119}} when, and only when, they appear in all capitals, as shown here.
+::boilerplate bcp14
 
 Other terminology can be found in {{I-D.ietf-6tisch-architecture}} in section
 2.1.
