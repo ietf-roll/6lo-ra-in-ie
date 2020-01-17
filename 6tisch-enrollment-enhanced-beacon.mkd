@@ -223,14 +223,31 @@ In some LLNs where multiple PANIDs may lead to the same management device
 
 # Security Considerations
 
-All of the contents of this Information Element are sent in the clear.  The
-containing Enhanced Beacon is not encrypted.
+All of the contents of this Information Element are sent in the clear.  
+The containing Enhanced Beacon is not encrypted.
+This is a restriction in the cryptographic architecture of the TSCH
+mechanism.
+In order to decrypt or do integrity checking of layer-2 frames in TSCH, the
+TSCH Absolute Slot Number (ASN) is needed.  
+The Enhanced Beacon provides the ASN to new (and long-sleeping) nodes.
 
 The Enhanced Beagon is authenticated at the layer-2 level using 802.15.4
 mechanisms using the network-wide keying material.  Nodes which are enrolled
 will have the network-wide keying material and can validate the beacon.
 
-Pledges which have not yet enrolled are unable to authenticate the beacons.
+Pledges which have not yet enrolled are unable to authenticate the beacons,
+and will be forced to temporarily take the contents on trust.  
+After enrollment, the pledge will be able to return to the beacon and
+validate it.
+
+In addition to the enrollment and join information described in this
+document, the Enhanced Beacon contains a description of the TSCH schedule to
+be used by the transmitter of this packet.
+The schedule can provide an attacker with a list of channels and frequencies
+on which communication will occur. 
+Knowledge of this can help an attacker to more efficiently jam
+communications, although there is future work being considered to make some
+of the schedule less visible.
 
 # Privacy Considerations
 
