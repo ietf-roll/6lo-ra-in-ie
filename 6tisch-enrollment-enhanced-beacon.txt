@@ -5,8 +5,8 @@
 6tisch Working Group                                          D. Dujovne
 Internet-Draft                                Universidad Diego Portales
 Intended status: Standards Track                           M. Richardson
-Expires: 19 July 2020                           Sandelman Software Works
-                                                         16 January 2020
+Expires: 20 July 2020                           Sandelman Software Works
+                                                         17 January 2020
 
 
    IEEE 802.15.4 Information Element encapsulation of 6TiSCH Join and
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 July 2020.
+   This Internet-Draft will expire on 20 July 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Dujovne & Richardson      Expires 19 July 2020                  [Page 1]
+Dujovne & Richardson      Expires 20 July 2020                  [Page 1]
 
 Internet-Draft                IE for ICMPv6                 January 2020
 
@@ -68,7 +68,7 @@ Table of Contents
      1.2.  Layer-2 Synchronization . . . . . . . . . . . . . . . . .   2
      1.3.  Layer-3 synchronization: IPv6 Router Solicitations and
            Advertisements  . . . . . . . . . . . . . . . . . . . . .   3
-   2.  Protocol Definition . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Protocol Definition . . . . . . . . . . . . . . . . . . . . .   4
    3.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    4.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .   6
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
@@ -87,7 +87,11 @@ Table of Contents
 
 1.1.  Use of BCP 14 Terminology
 
-   ::boilerplate bcp14
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
    Other terminology can be found in [I-D.ietf-6tisch-architecture] in
    section 2.1.
@@ -102,17 +106,16 @@ Table of Contents
    The EB is used by nodes already part of a TSCH network to annouce its
    existence.  Receiving an EB allows a Joining Node (pledge) to learn
    about the network and synchronize to it.  The EB may also be used as
-   a means for a node already part of the network to re-synchronize
-   [RFC7554].
 
 
 
-
-
-Dujovne & Richardson      Expires 19 July 2020                  [Page 2]
+Dujovne & Richardson      Expires 20 July 2020                  [Page 2]
 
 Internet-Draft                IE for ICMPv6                 January 2020
 
+
+   a means for a node already part of the network to re-synchronize
+   [RFC7554].
 
    There is a limited number of timeslots designated as a broadcast slot
    by each router in the network.  Considering 10ms slots and a slot-
@@ -156,19 +159,21 @@ Internet-Draft                IE for ICMPv6                 January 2020
    enrollment information to prospective pledges in a more efficient
    way.
 
+
+
+
+
+
+
+Dujovne & Richardson      Expires 20 July 2020                  [Page 3]
+
+Internet-Draft                IE for ICMPv6                 January 2020
+
+
 2.  Protocol Definition
 
    [RFC8137] creates a registry for new IETF IE subtypes.  This document
    allocates a new subtype.
-
-
-
-
-
-Dujovne & Richardson      Expires 19 July 2020                  [Page 3]
-
-Internet-Draft                IE for ICMPv6                 January 2020
-
 
    The new IE subtype structure is as follows.  As explained in
    [RFC8137] the length of the Sub-Type Content can be calculated from
@@ -213,18 +218,18 @@ Internet-Draft                IE for ICMPv6                 January 2020
    proxy priority (proxy prio)  this field indicates the willingness of
       the sender to act as join proxy.  Lower value indicates greater
       willingness to act as a Join Proxy as described in
+
+
+
+Dujovne & Richardson      Expires 20 July 2020                  [Page 4]
+
+Internet-Draft                IE for ICMPv6                 January 2020
+
+
       [I-D.ietf-6tisch-minimal-security].  Values range 0x00 (most
       willing) to 0x7e (least willing).  A priority of 0x7f indicates
       that the announcer should never be considered as a viable
       enrollment proxy.  Only unenrolled pledges look at this value.
-
-
-
-
-Dujovne & Richardson      Expires 19 July 2020                  [Page 4]
-
-Internet-Draft                IE for ICMPv6                 January 2020
-
 
    rank priority  the rank "priority" is set by the 6LR which sent the
       beacon and is an indication of how willing this 6LR is to serve as
@@ -269,18 +274,19 @@ Internet-Draft                IE for ICMPv6                 January 2020
 
    The Enhanced Beagon is authenticated at the layer-2 level using
    802.15.4 mechanisms using the network-wide keying material.  Nodes
+
+
+
+Dujovne & Richardson      Expires 20 July 2020                  [Page 5]
+
+Internet-Draft                IE for ICMPv6                 January 2020
+
+
    which are enrolled will have the network-wide keying material and can
    validate the beacon.
 
    Pledges which have not yet enrolled are unable to authenticate the
    beacons.
-
-
-
-Dujovne & Richardson      Expires 19 July 2020                  [Page 5]
-
-Internet-Draft                IE for ICMPv6                 January 2020
-
 
 4.  Privacy Considerations
 
@@ -324,19 +330,19 @@ Internet-Draft                IE for ICMPv6                 January 2020
 
    [ieee802154]
               IEEE standard for Information Technology, ., "IEEE Std.
+
+
+
+Dujovne & Richardson      Expires 20 July 2020                  [Page 6]
+
+Internet-Draft                IE for ICMPv6                 January 2020
+
+
               802.15.4, Part. 15.4: Wireless Medium Access Control (MAC)
               and Physical Layer (PHY) Specifications for Low-Rate
               Wireless Personal Area Networks", 2015,
               <http://standards.ieee.org/findstds/
               standard/802.15.4-2015.html>.
-
-
-
-
-Dujovne & Richardson      Expires 19 July 2020                  [Page 6]
-
-Internet-Draft                IE for ICMPv6                 January 2020
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -358,6 +364,10 @@ Internet-Draft                IE for ICMPv6                 January 2020
               Element for the IETF", RFC 8137, DOI 10.17487/RFC8137, May
               2017, <https://www.rfc-editor.org/info/rfc8137>.
 
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
 7.2.  Informative References
 
    [I-D.ietf-6tisch-architecture]
@@ -376,6 +386,14 @@ Internet-Draft                IE for ICMPv6                 January 2020
 
    [RFC7554]  Watteyne, T., Ed., Palattella, M., and L. Grieco, "Using
               IEEE 802.15.4e Time-Slotted Channel Hopping (TSCH) in the
+
+
+
+Dujovne & Richardson      Expires 20 July 2020                  [Page 7]
+
+Internet-Draft                IE for ICMPv6                 January 2020
+
+
               Internet of Things (IoT): Problem Statement", RFC 7554,
               DOI 10.17487/RFC7554, May 2015,
               <https://www.rfc-editor.org/info/rfc7554>.
@@ -384,15 +402,6 @@ Internet-Draft                IE for ICMPv6                 January 2020
               IPv6 over the TSCH Mode of IEEE 802.15.4e (6TiSCH)
               Configuration", BCP 210, RFC 8180, DOI 10.17487/RFC8180,
               May 2017, <https://www.rfc-editor.org/info/rfc8180>.
-
-
-
-
-
-Dujovne & Richardson      Expires 19 July 2020                  [Page 7]
-
-Internet-Draft                IE for ICMPv6                 January 2020
-
 
 Authors' Addresses
 
@@ -436,13 +445,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Dujovne & Richardson      Expires 19 July 2020                  [Page 8]
+Dujovne & Richardson      Expires 20 July 2020                  [Page 8]

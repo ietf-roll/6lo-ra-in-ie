@@ -76,7 +76,7 @@ designated a broadcast slot.
 
 ## Use of BCP 14 Terminology          {#Terminology}
 
-::boilerplate bcp14
+{::boilerplate bcp14}
 
 Other terminology can be found in {{I-D.ietf-6tisch-architecture}} in section
 2.1.
