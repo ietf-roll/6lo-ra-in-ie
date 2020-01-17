@@ -104,9 +104,9 @@ Advertisements, or Neighbor Discovery could even more scarce.
 ## Layer-3 synchronization: IPv6 Router Solicitations and Advertisements
 
 At layer 3, {{RFC4861}} defines a mechanism by which nodes learn about
-routers by listening for multicasted Router Advertisements (RA). If no RA is
-heard within a set time, then a Router Solicitation (RS) may be multicast,
-to which an RA will be received, usually unicast.
+routers by receiving multicast Router Advertisements (RA). 
+If no RA is heard within a set time, then a Router Solicitation (RS) may be
+sent as multicast, to which an RA will be received, usually unicast.
 
 Although {{RFC6775}} reduces the amount of multicast necessary to do address
 resolution via Neighbor Solicitation (NS) messages, it still requires multicast
@@ -162,8 +162,8 @@ container, so no length information is necessary.
     +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |               |
     +-+-+-+-+-+-+-+-+
-
 {: #iesubtype title="IE subtype structure"}
+
 
 R
 : the Router Advertisement R-flag is set if the sending node will act as a
@@ -178,8 +178,8 @@ address used to originate this enhanced beacon.
 In either case, the destination layer-2 address of
 this beacon may use the layer-2 address which was used to originate the beacon.
 
-proxy priority
-: this field indicates the willingness fo the sender to act as join proxy.
+proxy priority (proxy prio)
+: this field indicates the willingness of the sender to act as join proxy.
 Lower value indicates greater willingness to act as a Join Proxy as described in
 {{I-D.ietf-6tisch-minimal-security}}. Values range 0x00 (most willing)
 to 0x7e (least willing).  A priority of 0x7f indicates that
