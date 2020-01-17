@@ -1,15 +1,15 @@
 ---
 title: IEEE 802.15.4 Information Element encapsulation of 6TiSCH Join and Enrollment Information
 abbrev: IE for ICMPv6
-docname: draft-ietf-6tisch-enrollment-enhanced-beacon-06
+docname: draft-ietf-6tisch-enrollment-enhanced-beacon-07
 
 stand_alone: true
 
-ipr: trust200902
-area: Internet
-wg: 6lo Working Group
-kw: Internet-Draft
-cat: std
+ipr:    trust200902
+area:   Internet
+wg:     6tisch Working Group
+kw:     Internet-Draft
+cat:    std
 
 pi:    # can use array (if all yes) or hash here
 #  - toc
@@ -18,6 +18,7 @@ pi:    # can use array (if all yes) or hash here
   toc: yes
   sortrefs:   # defaults to yes
   symrefs: yes
+  consensus: yes
 
 author:
       -
@@ -48,6 +49,7 @@ normative:
     title: "IEEE Std. 802.15.4, Part. 15.4: Wireless Medium Access Control (MAC) and Physical Layer (PHY) Specifications for Low-Rate Wireless Personal Area Networks"
     author:
       ins: "IEEE standard for Information Technology"
+    date: 2015
 
 informative:
   I-D.ietf-6tisch-architecture:
