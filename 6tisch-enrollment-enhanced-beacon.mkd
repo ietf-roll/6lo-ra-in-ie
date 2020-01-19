@@ -233,11 +233,12 @@ The Enhanced Beacon provides the ASN to new (and long-sleeping) nodes.
 
 The Enhanced Beagon is authenticated at the layer-2 level using 802.15.4
 mechanisms using the network-wide keying material.  Nodes which are enrolled
-will have the network-wide keying material and can validate the beacon.
+will have the network-wide keying material and can validate the beacon,
+providing them with a trusted
 
 Pledges which have not yet enrolled are unable to authenticate the beacons,
-and will be forced to temporarily take the contents on trust.  
-After enrollment, the pledge will be able to return to the beacon and
+and will be forced to temporarily take the contents on faith.
+After enrollment, a newly enrolled node will be able to return to the beacon and
 validate it.
 
 In addition to the enrollment and join information described in this
