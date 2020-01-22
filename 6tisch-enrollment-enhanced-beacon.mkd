@@ -233,7 +233,10 @@ fe80::/64.
 
 : this field communicates a lower-64 bits that should be used for this nodes'
 layer-3 address, if it should not be derived from the layer-2 address. 
-
+Communication with the Join Proxy occurs in the clear, this field avoids the
+need for an additional service discovery process for the case where the L3
+address is not derived from the L2 address. 
+An attacker will see both L2 and L3 addresses, so this field provides no new information.
 
 network ID
 : this is a variable length field, up to 16-bytes in size that uniquely identifies
@@ -241,11 +244,18 @@ this network, potentially among many networks that are operating in the same
 frequencies in overlapping physical space.  The length of this field can be
 calculated as being whatever is left in the Information Element.
 
-In a 6tisch network, where RPL {{RFC6550}} is used as the mesh routing protocol, the
+: In a 6tisch network, where RPL {{RFC6550}} is used as the mesh routing protocol, the
 network ID can be constructed from a SHA256 hash of the prefix (/64) of the
 network.  That is just a suggestion for a default value.
 In some LLNs where multiple PANIDs may lead to the same management device
-(the JRC), then a common value that is the same across all PANs MUST be configured.
+(the JRC), then a common value that is the same across all PANs MUST be
+configured.
+
+: If the the network ID is derived as suggested, then it will an opaque,
+seemingly random value, and will reveal nothing in of itself.
+An attacker can match this value across many transmissions to map the extent
+of a network beyond what the PANID might already provide. 
+
 
 # Security Considerations
 
