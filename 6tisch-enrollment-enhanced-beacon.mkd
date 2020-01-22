@@ -1,7 +1,7 @@
 ---
 title: IEEE 802.15.4 Information Element encapsulation of 6TiSCH Join and Enrollment Information
 abbrev: IE for ICMPv6
-docname: draft-ietf-6tisch-enrollment-enhanced-beacon-08
+docname: draft-ietf-6tisch-enrollment-enhanced-beacon-09
 
 stand_alone: true
 
