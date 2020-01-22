@@ -170,6 +170,12 @@ R
 Router for host-only nodes that need addressing via unicast Router
 Solicitation messages.
 
+: in most cases, every node sending a beacon will set this flag, and in a
+typical mesh, this will be every single node.  When this bit is not set, it
+indicates that this node may be under provisioned, or may have no additional
+slots for additional nodes.  This could make this node more interesting to an
+attacker. 
+
 P
 : if the Proxy Address P-flag is set, then the lower 64-bits of the Join Proxy's
 link-local address follows the network ID.  If the Proxy Address bit is not set,
@@ -177,6 +183,8 @@ then the Link Layer address of the Join Proxy is identical to the Layer-2 8-byte
 address used to originate this enhanced beacon.
 In either case, the destination layer-2 address of
 this beacon may use the layer-2 address which was used to originate the beacon.
+
+: this bit only indicates if another part of the structure is present.
 
 proxy priority (proxy prio)
 : this field indicates the willingness of the sender to act as join proxy.
@@ -186,6 +194,10 @@ to 0x7e (least willing).  A priority of 0x7f indicates that
 the announcer should never be considered as a viable enrollment proxy.   Only
 unenrolled pledges look at this value.
 
+: lower values in this field indicate that the transmitter may have more
+capacity to handle unencrypted traffic.  A higher value may indicate that the
+transmitter is low on neighbor cache entries, or other resources.
+
 rank priority
 : the rank "priority" is set by the 6LR which sent the beacon and is an
 indication of how willing this 6LR is to serve as an RPL parent within a
@@ -193,7 +205,13 @@ particular network ID.  This is a local value to be determined in other
 work.  It might be calculated from RPL rank, and it may include some
 modifications based upon current number of children, or number of neighbor
 cache entries available.  This value MUST be ignored by pledges, it is for
-enrolled devices only.
+enrolled devices only.  Lower values are better.
+
+: an attacker can use this value to determine which nodes are potentially
+more interesting.  
+Nodes which are less willing to be parents likely have more traffic, and an
+attacker could use this information to determine which nodes would be more
+interesting to attack or disrupt.
 
 pan priority
 : the pan priority is a value set by the DODAG root to indicate the relative
@@ -203,11 +221,19 @@ which have already enrolled, and need to determine which PAN to pick.
 Unenrolled pledges MAY consider this value when selecting a PAN to join.
 Enrolled devices MAY consider this value when looking for an eligible parent device.
 
+: an attacker can use this value, along with the observed PANID in the Beacon
+to determine which PANIDs have more network resources, and may have more
+interesting traffic.
+
 Join Proxy lower-64
 :  if the P bit is set, then 64 bits (8 bytes) of
 address are present. This field provides the suffix of the Link-Local
 address of the Join Proxy. The associated prefix is well-known as
 fe80::/64.
+
+: this field communicates a lower-64 bits that should be used for this nodes'
+layer-3 address, if it should not be derived from the layer-2 address. 
+
 
 network ID
 : this is a variable length field, up to 16-bytes in size that uniquely identifies
@@ -248,7 +274,14 @@ The schedule can provide an attacker with a list of channels and frequencies
 on which communication will occur. 
 Knowledge of this can help an attacker to more efficiently jam
 communications, although there is future work being considered to make some
-of the schedule less visible.
+of the schedule less visible.  
+Encrypting the schedule does not prevent an attacker from jamming, but rather
+increases the energy cost of doing that jamming.
+
+
+
+
+
 
 # Privacy Considerations
 
