@@ -104,7 +104,7 @@ Advertisements, or Neighbor Discovery could even more scarce.
 ## Layer-3 synchronization: IPv6 Router Solicitations and Advertisements
 
 At layer 3, {{RFC4861}} defines a mechanism by which nodes learn about
-routers by receiving multicast Router Advertisements (RA). 
+routers by receiving multicast Router Advertisements (RA).
 If no RA is heard within a set time, then a Router Solicitation (RS) may be
 sent as multicast, to which an RA will be received, usually unicast.
 
@@ -174,7 +174,7 @@ Solicitation messages.
 typical mesh, this will be every single node.  When this bit is not set, it
 indicates that this node may be under provisioned, or may have no additional
 slots for additional nodes.  This could make this node more interesting to an
-attacker. 
+attacker.
 
 P
 : if the Proxy Address P-flag is set, then the lower 64-bits of the Join Proxy's
@@ -208,7 +208,7 @@ cache entries available.  This value MUST be ignored by pledges, it is for
 enrolled devices only.  Lower values are better.
 
 : an attacker can use this value to determine which nodes are potentially
-more interesting.  
+more interesting.
 Nodes which are less willing to be parents likely have more traffic, and an
 attacker could use this information to determine which nodes would be more
 interesting to attack or disrupt.
@@ -232,10 +232,10 @@ address of the Join Proxy. The associated prefix is well-known as
 fe80::/64.
 
 : this field communicates a lower-64 bits that should be used for this nodes'
-layer-3 address, if it should not be derived from the layer-2 address. 
+layer-3 address, if it should not be derived from the layer-2 address.
 Communication with the Join Proxy occurs in the clear, this field avoids the
 need for an additional service discovery process for the case where the L3
-address is not derived from the L2 address. 
+address is not derived from the L2 address.
 An attacker will see both L2 and L3 addresses, so this field provides no new information.
 
 network ID
@@ -254,17 +254,17 @@ configured.
 : If the the network ID is derived as suggested, then it will an opaque,
 seemingly random value, and will reveal nothing in of itself.
 An attacker can match this value across many transmissions to map the extent
-of a network beyond what the PANID might already provide. 
+of a network beyond what the PANID might already provide.
 
 
 # Security Considerations
 
-All of the contents of this Information Element are sent in the clear.  
+All of the contents of this Information Element are sent in the clear.
 The containing Enhanced Beacon is not encrypted.
 This is a restriction in the cryptographic architecture of the TSCH
 mechanism.
 In order to decrypt or do integrity checking of layer-2 frames in TSCH, the
-TSCH Absolute Slot Number (ASN) is needed.  
+TSCH Absolute Slot Number (ASN) is needed.
 The Enhanced Beacon provides the ASN to new (and long-sleeping) nodes.
 
 The Enhanced Beagon is authenticated at the layer-2 level using 802.15.4
@@ -281,10 +281,10 @@ In addition to the enrollment and join information described in this
 document, the Enhanced Beacon contains a description of the TSCH schedule to
 be used by the transmitter of this packet.
 The schedule can provide an attacker with a list of channels and frequencies
-on which communication will occur. 
+on which communication will occur.
 Knowledge of this can help an attacker to more efficiently jam
 communications, although there is future work being considered to make some
-of the schedule less visible.  
+of the schedule less visible.
 Encrypting the schedule does not prevent an attacker from jamming, but rather
 increases the energy cost of doing that jamming.
 
