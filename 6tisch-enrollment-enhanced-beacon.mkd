@@ -177,12 +177,8 @@ slots for additional nodes.  This could make this node more interesting to an
 attacker.
 
 P:
-: if the Proxy Address P-flag is set, then the lower 64-bits of the Join Proxy's
-link-local address follows the network ID.  If the Proxy Address bit is not set,
-then the Link Layer address of the Join Proxy is identical to the Layer-2 8-byte
-address used to originate this enhanced beacon.
-In either case, the destination layer-2 address of
-this beacon may use the layer-2 address which was used to originate the beacon.
+: if the Proxy Address P-flag is set, then the Join Proxy lower-64 bit field
+is present.  Otherwise, it is not provided.
 
 : this bit only indicates if another part of the structure is present, and
 has little security or privacy impact.
@@ -227,10 +223,10 @@ to determine which PANIDs have more network resources, and may have more
 interesting traffic.
 
 Join Proxy lower-64:
-:  if the P bit is set, then 64 bits (8 bytes) of
-address are present. This field provides the suffix of the Link-Local
-address of the Join Proxy. The associated prefix is well-known as
-fe80::/64.
+:  if the P bit is set, then 64 bits (8 bytes) of address are present. 
+This field provides the suffix (IID) of the Link-Local address of the Join Proxy. 
+The associated prefix is well-known as fe80::/64.  If this field is not
+present, then IID is derived from the layer-2 address of the sender.
 
 : this field communicates a lower-64 bits that should be used for this nodes'
 layer-3 address, if it should not be derived from the layer-2 address.
